@@ -92,6 +92,8 @@ function KanbanBoard() {
         setColumns([...columns, columnToAdd]);
     }
 
+    // No parameters
+    // Responsible for generating a random number ID 
     function generateId() {
         // Generate a random number between 0 and 10000
         return Math.floor(Math.random() * 10001);
@@ -120,21 +122,34 @@ function KanbanBoard() {
 
     function onDragEnd(event: DragEndEvent) {
         console.log("Drag End");
+
+        // Stores the 'active' and 'over' properties from the event object
         const { active, over } = event;
+
+        // If no target exists, break from the function
         if (!over) return;
 
+        // Extract column ID from active variable
         const activeColumnId = active.id;
+
+        // Extract column ID from over varaible
         const overColumnId = over.id;
 
+        // If active and over column are the same, break from the function
         if (activeColumnId === overColumnId) return;
 
+        // Updates the 'columns' state by moving the 'active' column to the position of the 'over' column
         setColumns((columns) => {
+
+            // Finds the index of the 'active' column in the array
             const activeColumnIndex = columns.findIndex(
                 (col) => col.id === activeColumnId)
 
+            // Finds the index of the 'over' column in the array
             const overColumnIndex = columns.findIndex(
                 (col) => col.id === overColumnId);
 
+            // Moves the 'active' column to the position of the 'over' column
             return arrayMove(columns, activeColumnIndex, overColumnIndex);
         });
     }

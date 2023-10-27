@@ -8,19 +8,24 @@ import { createPortal } from "react-dom";
 
 function KanbanBoard() {
 
+    // Holds the state of the columns object array
     const [columns, setColumns] = useState<Column[]>([]);
+
+    // Stores resulting map of column IDs
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+
+    // Stores the state of a column that is flagged as active
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
     const sensors = useSensors (
         useSensor(PointerSensor, {
             activationConstraint: {
-                distance: 3,
+                distance: 3, // Activation constraint for the point sensor (3px)
             },
         })
     );
 
-    console.log(columns);
+    //console.log(columns);
     return (
         <div className="
         m-auto
@@ -48,20 +53,20 @@ function KanbanBoard() {
                             createNewColumn();
                         }}
                         className="
-                    h-[60px]
-                    w-[350px]
-                    min-w-[350px]
-                    cursor-pointer
-                    rounded-lg
-                    bg-mainBackgroundColor
-                    border-2
-                    border-columnBackgroundColor
-                    p-4
-                    ring-rose-500
-                    hover:ring-2
-                    flex
-                    gap-2
-                    "
+                        h-[60px]
+                        w-[350px]
+                        min-w-[350px]
+                        cursor-pointer
+                        rounded-lg
+                        bg-mainBackgroundColor
+                        border-2
+                        border-columnBackgroundColor
+                        p-4
+                        ring-rose-500
+                        hover:ring-2
+                        flex
+                        gap-2
+                        "
                     ><PlusIcon />Add Column</button>
                 </div>
 
@@ -73,12 +78,17 @@ function KanbanBoard() {
         </div>
     );
 
+    // No parameters
+    // Responsible for creating a new array that includes all existing columns
+    //  and adding a new one
     function createNewColumn() {
+        // Generate a new column object with a unique ID and title
         const columnToAdd:Column = {
             id: generateId(),
             title: `Column ${columns.length + 1}`,
         };
 
+        // Update the 'columns' state by adding the new column
         setColumns([...columns, columnToAdd]);
     }
 
@@ -87,14 +97,22 @@ function KanbanBoard() {
         return Math.floor(Math.random() * 10001);
     }
 
+    // Recieves the id of column to be deleted
+    // filters out the id from the current list of columns
     function deleteColumn(id: Id) {
+        // Filters the 'columns' array to remove the column with the specified 'id'.
         const filteredColumns = columns.filter((col) => col.id !== id);
+        // Sets the 'columns' state to the filtered array, removing the specified column.
         setColumns(filteredColumns);
     }
 
+    // Recieves the DragStartEvent event
+    // If a column is being dragged, set the column selected to active
     function onDragStart(event: DragStartEvent) {
         console.log("Drag Start");
+        // Checks if the type of the currently dragged data is "Column".
         if (event.active.data.current?.type === "Column") {
+            // Calls the setActiveColumn function with the column data from the dragged item.
             setActiveColumn(event.active.data.current.column);
             return;
         }

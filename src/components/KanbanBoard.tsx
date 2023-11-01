@@ -44,7 +44,9 @@ function KanbanBoard() {
                             {columns.map(col => (
                                 <ColumnContainer key={col.id} 
                                 column={col} 
-                                deleteColumn={deleteColumn}/>
+                                deleteColumn={deleteColumn}
+                                updateColumn={updateColumn}
+                                />
                             ))}
                         </SortableContext>
                     </div>
@@ -71,8 +73,12 @@ function KanbanBoard() {
                 </div>
 
                 {createPortal (<DragOverlay>  
-                    {activeColumn && (<ColumnContainer column={activeColumn} deleteColumn={deleteColumn} />)}
-                </DragOverlay>, document.body)};
+                    {activeColumn && (<ColumnContainer 
+                        column={activeColumn} 
+                        deleteColumn={deleteColumn} 
+                        updateColumn={updateColumn}
+                        />)}
+                </DragOverlay>, document.body)}
 
             </DndContext>
         </div>
@@ -106,6 +112,15 @@ function KanbanBoard() {
         const filteredColumns = columns.filter((col) => col.id !== id);
         // Sets the 'columns' state to the filtered array, removing the specified column.
         setColumns(filteredColumns);
+    }
+
+    function updateColumn(id: Id, title: string) {
+        const newColumns = columns.map(col => {
+            if (col.id !== id) return col;
+            return {...col, title};
+        });
+
+        setColumns(newColumns);
     }
 
     // Recieves the DragStartEvent event

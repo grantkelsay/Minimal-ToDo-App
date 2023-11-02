@@ -6,6 +6,10 @@
 
 Minimal Todo is a sleek and intuitive Task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
 
+## Try it Yourself
+
+[Mnml.todo](https://master--jade-concha-9569ab.netlify.app/)
+
 ## Current Features
 
 - **Task Board**: Organize tasks into customizable columns for different stages of your workflow, such as To-Do, In Progress, and Completed.

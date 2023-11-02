@@ -1,6 +1,6 @@
 # Minimal Todo Task Board
 
-![mnmltodo](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/6cfa90e2-26b5-40ec-8b91-da3ce322c8e5)
+![mnml](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/f97a00de-8f89-4149-8a94-3da66df25ef4)
 
 ## Overview
 

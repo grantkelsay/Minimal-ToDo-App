@@ -23,9 +23,9 @@ Minimal Todo is a sleek and intuitive Kanban board application designed to help 
 ## Future Features
 
 - **Task Cards**: Create and customize task cards with due dates, urgency, and labels.
-- 
+  
 - **Prioritization**: Set task priorities and due dates to stay on top of your most important work.
-- 
+  
 - **Labels and Tags**: Use labels and tags to categorize and filter your tasks.
 
 ## Getting Started

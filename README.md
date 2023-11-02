@@ -1,6 +1,6 @@
 # Minimal Todo Kanban Board
 
-![mnmltodo](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/ceaf579f-ac67-4a87-a9bf-b9d3c5cd866d)
+![mnmltodo](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/6cfa90e2-26b5-40ec-8b91-da3ce322c8e5)
 
 ## Overview
 

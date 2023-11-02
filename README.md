@@ -8,7 +8,7 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 
 ## Try it Yourself
 
-[Mnml.todo](https://master--jade-concha-9569ab.netlify.app/)
+[Mnml.todo](https://mnmltodo.netlify.app/)
 
 ## Current Features
 

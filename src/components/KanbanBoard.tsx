@@ -241,6 +241,10 @@ function KanbanBoard() {
                 </DragOverlay>, document.body)}
 
             </DndContext>
+            <div className="flex items-center text-center">
+                <p>Created By</p>
+                <p>Grant Kelsay | github.com/grantkelsay | linkedin.com/in/grant-kelsay </p>
+            </div>
         </div>
     );
 

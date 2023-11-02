@@ -1,14 +1,14 @@
-# Minimal Todo Kanban Board
+# Minimal Todo Task Board
 
 ![mnmltodo](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/6cfa90e2-26b5-40ec-8b91-da3ce322c8e5)
 
 ## Overview
 
-Minimal Todo is a sleek and intuitive Kanban board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
+Minimal Todo is a sleek and intuitive Task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
 
 ## Current Features
 
-- **Kanban Board**: Organize tasks into customizable columns for different stages of your workflow, such as To-Do, In Progress, and Completed.
+- **Task Board**: Organize tasks into customizable columns for different stages of your workflow, such as To-Do, In Progress, and Completed.
 
 - **Columns**: Create and customize columns with titles.
 

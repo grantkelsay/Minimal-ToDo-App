@@ -18,13 +18,7 @@ Minimal Todo is a sleek and intuitive Kanban board application designed to help 
 
 - **Quick Editing**: Inline editing for task details, making updates a breeze.
 
-
-
-- **Search and Filters**: Quickly find tasks using powerful search and filter options.
-
 - **Dark Mode**: Reduce eye strain with our beautiful dark mode.
-
-- **Mobile Responsive**: Access your Kanban board on the go with our responsive design.
 
 ## Future Features
 
@@ -36,7 +30,7 @@ Minimal Todo is a sleek and intuitive Kanban board application designed to help 
 
 ## Getting Started
 
-1. **Create a Board**: Click "Create Board" to start a new Kanban board, or use the default board.
+1. **Create a Column**: Click "Add Column" to start a new task board.
 
 2. **Add Tasks**: Create tasks by clicking "Add Task" and filling in the details.
 
@@ -50,7 +44,6 @@ Minimal Todo is a sleek and intuitive Kanban board application designed to help 
 
 ![ss2](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/c252dcb3-a6e1-4e59-9cb5-0013220f50a2)
 ![ss1](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/ebe54e8f-6921-4aae-aa12-8c36f7de11e2)
-
 
 ## Tech Stack
 
@@ -75,4 +68,4 @@ Thank you for choosing Minimal Todo! We hope it simplifies your task management 
 
 ---
 
-**Minimal Todo** - Your Simple Kanban Board Solution
+**Minimal Todo** - Your Simple Task Board Solution

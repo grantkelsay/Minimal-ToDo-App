@@ -242,9 +242,7 @@ function KanbanBoard() {
 
             </DndContext>
             <div className="flex items-center text-center p-10 opacity-60">
-                <p>Created By</p>
-                {"\n"}
-                <p>Grant Kelsay | github.com/grantkelsay | linkedin.com/in/grant-kelsay </p>
+                <p>Created By Grant Kelsay <br />github.com/grantkelsay | linkedin.com/in/grant-kelsay</p>
             </div>
         </div>
     );

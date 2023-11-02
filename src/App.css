@@ -11,15 +11,15 @@ body,
 
 /* Styling the scroll bar */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 ::-webkit-scrollbar:horizontal {
-  height: 8px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-rose-500 rounded-xl;
+  @apply bg-mainAccentColor rounded-xl;
 }
 
 .task > ::-webkit-scrollbar-thumb {

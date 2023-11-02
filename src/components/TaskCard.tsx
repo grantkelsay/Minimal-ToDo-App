@@ -50,13 +50,13 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         rounded-xl
         hover:ring-2
         hover:ring-inset
-        hover:ring-rose-500
+        hover:ring-mainAccentColor
         cursor-grab
         relative
         task
         opacity-30
         border-2
-        border-rose-500"
+        border-mainAccentColor"
         />)
     }
 
@@ -68,7 +68,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         {...attributes}
         {...listeners}
             className="
-            bg-mainBackgroundColor
+            bg-secondaryAccentColor
             p-2.5
             h-[100px]
             min-h-[100px]
@@ -78,7 +78,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             rounded-xl
             hover:ring-2
             hover:ring-inset
-            hover:ring-rose-500
+            hover:ring-mainAccentColor
             cursor-grab
             relative"
             >
@@ -88,7 +88,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
                 resize-none
                 ring-2
                 ring-outset
-                ring-rose-500
+                ring-mainAccentColor
                 rounded-lg
                 p-3
                 rounded
@@ -116,7 +116,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
     {...listeners}
     onClick={toggleEditMode}
     className="
-    bg-mainBackgroundColor
+    bg-secondaryAccentColor
     p-2.5
     h-[100px]
     min-h-[100px]
@@ -126,7 +126,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
     rounded-xl
     hover:ring-2
     hover:ring-inset
-    hover:ring-rose-500
+    hover:ring-mainAccentColor
     cursor-grab
     relative
     task"

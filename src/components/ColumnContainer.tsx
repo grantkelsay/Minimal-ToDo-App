@@ -45,7 +45,7 @@ function ColumnContainer(props: Props) {
         bg-columnBackgroundColor
         opacity-40
         border-2
-        border-rose-500
+        border-mainAccentColor
         w-[350px]
         h-[500px]
         max-h-[500px]
@@ -75,11 +75,11 @@ function ColumnContainer(props: Props) {
         text-md
         h-[60px]
         cursor-grab
-        rounded-md
-        rounded-b-none
+        rounded-lg
         p-3
         font-bold
         border-columnBackgroundColor
+        hover:text-mainAccentColor
         border-4
         flex
         items-center
@@ -100,13 +100,13 @@ function ColumnContainer(props: Props) {
                 text-sm
                 rounded-full
                 "
-                >0</div>
+                >{tasks.length}</div>
                 {!editMode && column.title}
                 {editMode && (
                     <input 
                         className="
                         bg-black 
-                        focus:border-rose-500 
+                        focus:border-mainAccentColor
                         rounded 
                         border 
                         outline-none 
@@ -174,7 +174,7 @@ function ColumnContainer(props: Props) {
             p-4 
             border-x-columnBackgroundColor 
             hover:bg-mainBackgroundColor 
-            hover:text-rose-500 
+            hover:text-mainAccentColor
             active:bg-black
         "
         onClick={() => createTask(column.id)}>

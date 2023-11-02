@@ -77,13 +77,15 @@ function KanbanBoard() {
             m-auto
             flex
             flex-col
-            py-40
+            py-60
             w-full
+            min-h-screen
             items-center
             text-center
             overflow-x-auto
             overflow-y-hidden
             px-[40px]
+            bg-pageBackgroundColor
             ">
                 <div className="
                 flex
@@ -94,7 +96,8 @@ function KanbanBoard() {
                 flex
                 flex-col
                 gap-4
-                opacity-60"
+                opacity-100
+                animate-custom-fade-in"
                 >
                     <p>Begin by clicking 'Add Column'</p>
                     <p>shift + enter to stop editing tasks</p>
@@ -102,7 +105,7 @@ function KanbanBoard() {
                     <ArrowIcon />
                 </div>
                 <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
-                    <div className= "m-auto flex gap-4 p-5">
+                    <div className= "m-auto flex gap-4 p-5 animate-button-fade-in">
                         <div className = "flex gap-4">
                             <SortableContext items={columnsId}>
                                 {columns.map(col => (
@@ -129,12 +132,12 @@ function KanbanBoard() {
                             min-w-[350px]
                             cursor-pointer
                             rounded-lg
-                            bg-mainBackgroundColor
                             border-2
                             border-columnBackgroundColor
+                            bg-mainBackgroundColor
                             p-4
-                            ring-rose-500
-                            hover:ring-2
+                            hover:border-mainAccentColor
+                            hover:text-mainAccentColor
                             flex
                             gap-2
                             "
@@ -176,6 +179,7 @@ function KanbanBoard() {
         overflow-x-auto
         overflow-y-hidden
         px-[40px]
+        bg-pageBackgroundColor
         ">
             <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
                 <div className= "m-auto flex gap-4">
@@ -209,8 +213,9 @@ function KanbanBoard() {
                         border-2
                         border-columnBackgroundColor
                         p-4
-                        ring-rose-500
-                        hover:ring-2
+                        ring-mainAccentColor
+                        hover:border-mainAccentColor
+                        hover:text-mainAccentColor
                         flex
                         gap-2
                         "

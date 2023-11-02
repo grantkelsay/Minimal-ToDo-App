@@ -6,6 +6,7 @@ import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, P
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
+import ArrowIcon from "../icons/ArrowIcon";
 
 function KanbanBoard() {
 
@@ -16,6 +17,8 @@ function KanbanBoard() {
 
     // Stores resulting map of column IDs
     const columnsId = useMemo(() => columns.map((col) => col.id), [columns]);
+    
+    const [menuVisible, setMenuVisible] = useState(true);
 
     // Stores the state of a column that is flagged as active
     const [activeColumn, setActiveColumn] = useState<Column | null>(null);
@@ -30,14 +33,108 @@ function KanbanBoard() {
         })
     );
 
-    //console.log(columns);
+    if (menuVisible || columns.length === 0) {
+        return (
+            <div className="
+            m-auto
+            flex
+            flex-col
+            py-40
+            w-full
+            items-center
+            text-center
+            overflow-x-auto
+            overflow-y-hidden
+            px-[40px]
+            ">
+                <div className="
+                flex
+                items-center
+                text-white
+                px-20
+                py-5
+                flex
+                flex-col
+                gap-4
+                opacity-60"
+                >
+                    <p>Begin by clicking 'Add Column'</p>
+                    <p>shift + enter to stop editing tasks</p>
+                    <p>Drag and drop tasks and columns</p>
+                    <ArrowIcon />
+                </div>
+                <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>
+                    <div className= "m-auto flex gap-4 p-5">
+                        <div className = "flex gap-4">
+                            <SortableContext items={columnsId}>
+                                {columns.map(col => (
+                                    <ColumnContainer key={col.id} 
+                                    column={col} 
+                                    deleteColumn={deleteColumn}
+                                    updateColumn={updateColumn}
+                                    createTask={createTask}
+                                    deleteTask={deleteTask}
+                                    updateTask={updateTask}
+                                    tasks={tasks.filter(task => task.columnId === col.id)}
+                                    />
+                                ))}
+                            </SortableContext>
+                        </div>
+                        <button 
+                            onClick={() => {
+                                createNewColumn();
+                                hideMenu();
+                            }}
+                            className="
+                            h-[60px]
+                            w-[350px]
+                            min-w-[350px]
+                            cursor-pointer
+                            rounded-lg
+                            bg-mainBackgroundColor
+                            border-2
+                            border-columnBackgroundColor
+                            p-4
+                            ring-rose-500
+                            hover:ring-2
+                            flex
+                            gap-2
+                            "
+                        ><PlusIcon />Add Column</button>
+                    </div>
+    
+                    {createPortal (<DragOverlay>  
+                        {activeColumn && (<ColumnContainer 
+                                column={activeColumn} 
+                                deleteColumn={deleteColumn} 
+                                updateColumn={updateColumn}
+                                createTask={createTask}
+                                tasks={tasks.filter(task => task.columnId === activeColumn.id)}
+                                deleteTask={deleteTask}
+                                updateTask={updateTask}
+                            />
+                            )}
+                            {activeTask && (<TaskCard task={activeTask} 
+                                deleteTask={deleteTask}
+                                updateTask={updateTask}
+                            />
+                            )}
+                    </DragOverlay>, document.body)}
+    
+                </DndContext>
+            </div>
+        );
+    }
+
     return (
         <div className="
         m-auto
         flex
+        flex-col
         min-h-screen
         w-full
         items-center
+        text-center
         overflow-x-auto
         overflow-y-hidden
         px-[40px]
@@ -62,6 +159,7 @@ function KanbanBoard() {
                     <button 
                         onClick={() => {
                             createNewColumn();
+                            hideMenu();
                         }}
                         className="
                         h-[60px]
@@ -267,6 +365,10 @@ function KanbanBoard() {
             })
         }
 
+    }
+
+    function hideMenu() {
+        setMenuVisible(false);
     }
 }
 

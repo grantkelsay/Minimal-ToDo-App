@@ -86,10 +86,15 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
                 h-[90%]
                 w-full
                 resize-none
-                border-none
+                ring-2
+                ring-outset
+                ring-rose-500
+                rounded-lg
+                p-3
                 rounded
                 bg-transparent
                 text-white
+                opacity-60
                 focus:outline-none"
                 value={task.content}
                 autoFocus
@@ -99,9 +104,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
                     if (e.key === "Enter" && e.shiftKey) toggleEditMode();
                 }}
                 onChange={e => updateTask(task.id, e.target.value)}
-                >
-
-                </textarea>
+                />
             </div>)
     }
 

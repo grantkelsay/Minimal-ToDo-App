@@ -48,8 +48,9 @@ Minimal Todo is a sleek and intuitive Kanban board application designed to help 
 
 ## Screenshots
 
-![Screenshot 1](![ss2](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/550a2d00-c7be-4711-83ea-c2a33801d077)
-![Screenshot 2](![ss2](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/6d0d3b64-03ca-4bfb-bcdc-cb7ebd34ccb5)
+![ss2](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/c252dcb3-a6e1-4e59-9cb5-0013220f50a2)
+![ss1](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/ebe54e8f-6921-4aae-aa12-8c36f7de11e2)
+
 
 ## Tech Stack
 

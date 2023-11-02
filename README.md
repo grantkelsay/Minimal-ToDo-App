@@ -46,8 +46,7 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 
 ## Screenshots
 
-![ss2](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/c252dcb3-a6e1-4e59-9cb5-0013220f50a2)
-![ss1](https://github.com/grantkelsay/Minimal-ToDo-App/assets/62901403/ebe54e8f-6921-4aae-aa12-8c36f7de11e2)
+<img width="2249" alt="Screen Shot 2023-11-02 at 11 42 00 AM" src="https://github.com/grantkelsay/Mnml.Todo/assets/62901403/a4ba7de7-3fbe-4d36-a6de-7ead648f847a">
 
 ## Tech Stack
 

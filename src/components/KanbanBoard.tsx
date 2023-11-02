@@ -1,5 +1,5 @@
 import PlusIcon from "../icons/PlusIcon"
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
 import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
@@ -32,8 +32,46 @@ function KanbanBoard() {
             },
         })
     );
+    
+    // Create a variable that doesn't trigger during re-renders
+    const isInitialized = useRef(false);
 
-    if (menuVisible || columns.length === 0) {
+    // If all of the columns have been deleted by the user, set initialized back to false
+    if (columns.length === 0) {
+        isInitialized.current = false;
+    }
+
+    // Load column and task data from local storage
+    useEffect (() => {
+        // If the page hasn't already been initialized
+        if (!isInitialized.current) {
+            
+            const savedColumns = loadDataFromLocalStorage("columns");
+            if (savedColumns) {
+                setColumns(savedColumns);
+            }
+            // Load tasks from local storage
+            const savedTasks = loadDataFromLocalStorage("tasks");
+            if (savedTasks) {
+                setTasks(savedTasks);
+            }
+
+            // Set our initialized variable to true
+            isInitialized.current = true;
+        }
+    }, []);
+
+    // Listen for changes to columns and save it to local storage
+    useEffect(() => {
+        saveDataToLocalStorage("columns", columns);
+    }, [columns]);
+
+    // Listen for changes to tasks and save it to local storage
+    useEffect(() => {
+        saveDataToLocalStorage("tasks", tasks);
+    }, [tasks]);
+
+    if ((menuVisible || columns.length === 0) && !isInitialized.current) {
         return (
             <div className="
             m-auto
@@ -370,6 +408,18 @@ function KanbanBoard() {
     function hideMenu() {
         setMenuVisible(false);
     }
+
+    function saveDataToLocalStorage(key: string, data: any) {
+        localStorage.setItem(key, JSON.stringify(data));
+    }
+
+    function loadDataFromLocalStorage(key: string) {
+        const data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    }
+
 }
 
 export default KanbanBoard
+
+

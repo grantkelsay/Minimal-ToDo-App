@@ -48,7 +48,7 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 ## Tech Stack
 
 - Frontend: HTML, CSS, TailwindCSS, TypeScript, React, Vue.js
-- Backend: N/A
+- Backend: Java Spring Boot
 - Hosting: N/A
 
 ## Feedback

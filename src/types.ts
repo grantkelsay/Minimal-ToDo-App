@@ -10,4 +10,5 @@ export type Task = {
     columnId: Id,
     content: string;
     backgroundColor: string;
+    isNew: boolean;
 }

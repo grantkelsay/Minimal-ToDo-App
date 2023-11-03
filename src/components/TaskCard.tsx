@@ -9,7 +9,6 @@ interface Props {
     task: Task;
     deleteTask: (id: Id) => void;
     updateTask: (id: Id, content: string, backgroundColor: string) => void;
-    backgroundColor: string;
 }
 
 function TaskCard({task, deleteTask, updateTask}: Props) {
@@ -60,6 +59,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
 
     const toggleEditMode = () => {
         setEditMode((prev) => !prev);
+        task.isNew = false;
         setMouseIsOver(false);
     }
 
@@ -90,7 +90,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         />)
     }
 
-    if (editMode) {
+    if (editMode || task.isNew) {
         return (
         <div 
         ref={setNodeRef}
@@ -131,11 +131,11 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             value={task.content}
             autoFocus
             placeholder="Task content here"
-            onBlur={toggleEditMode}
+            onBlur={handleClick}
             onKeyDown={(e) => {
-                if (e.key === "Enter" && e.shiftKey) toggleEditMode();
+                if (e.key === "Enter" && e.shiftKey || task.isNew) handleClick();
             }}
-            onChange={e => updateTask(task.id, e.target.value, colorOptions[0].value)}
+            onChange={e => updateTask(task.id, e.target.value, task.backgroundColor)}
             />
         </div>)
     }

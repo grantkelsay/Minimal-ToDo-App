@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import TrashIcon from "../icons/TrashIcon";
 import { Id, Task } from "../types"
 import { useSortable } from "@dnd-kit/sortable";
@@ -14,7 +14,7 @@ interface Props {
 function TaskCard({task, deleteTask, updateTask}: Props) {
 
     const [mouseIsOver, setMouseIsOver] = useState(false);
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(task.isNew);
     const [backgroundColor, setBackgroundColor] = useState<string>("#6200EE");
     const [colorDropdownVisible, setColorDropdownVisible] = useState(false);
     const [isColorPickerClicked, setIsColorPickerClicked] = useState(false);
@@ -35,7 +35,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         { label: "bg-blue-600", value: "#2563EB"},
         { label: "bg-orange-600", value: "#EA580C"},
         { label: "bg-green-600", value: "#16A34A"},
-        { label: "bg-secondaryAccentColor", value: "#6200EE"}
+        { label: "bg-purpleColor", value: "#6200EE"}
     ];
 
     const style = {
@@ -53,13 +53,17 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
 
     const handleClick = () => {
         if (!isColorPickerClicked) {
+            console.log("current edit mode: " + editMode);
+            console.log("current isNew mode: " + task.isNew);
             toggleEditMode();
         }
     }
 
     const toggleEditMode = () => {
-        setEditMode((prev) => !prev);
         task.isNew = false;
+        setEditMode((prevEditMode) => !prevEditMode);
+        console.log("new edit mode: " + editMode);
+        console.log("new isNew mode: " + task.isNew);
         setMouseIsOver(false);
     }
 
@@ -80,13 +84,13 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         rounded-xl
         hover:ring-2
         hover:ring-inset
-        hover:ring-mainAccentColor
+        hover:ring-taskAccentColor
         cursor-grab
         relative
         task
         opacity-30
         border-2
-        border-mainAccentColor"
+        border-taskAccentColor"
         />)
     }
 
@@ -110,17 +114,18 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         rounded-xl
         hover:ring-2
         hover:ring-inset
-        hover:ring-mainAccentColor
+        hover:ring-taskAccentColor
         cursor-grab
         relative"
         >
-            <textarea className="
+            <textarea
+            className="
             h-[90%]
             w-full
             resize-none
             ring-2
             ring-outset
-            ring-mainAccentColor
+            ring-taskAccentColor
             rounded-lg
             p-3
             rounded
@@ -133,7 +138,9 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             placeholder="Task content here"
             onBlur={handleClick}
             onKeyDown={(e) => {
-                if (e.key === "Enter" && e.shiftKey || task.isNew) handleClick();
+                if (e.key === "Enter" && e.shiftKey) {
+                    handleClick();
+                }
             }}
             onChange={e => updateTask(task.id, e.target.value, task.backgroundColor)}
             />
@@ -160,7 +167,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         rounded-xl
         hover:ring-2
         hover:ring-inset
-        hover:ring-mainAccentColor
+        hover:ring-taskAccentColor
         cursor-grab
         relative
         task"

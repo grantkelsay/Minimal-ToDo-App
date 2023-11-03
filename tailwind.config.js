@@ -7,11 +7,14 @@ export default {
   theme: {
     extend: {
       colors: {
-        "mainBackgroundColor": '#121212',
-        "columnBackgroundColor": '#292929',
-        "pageBackgroundColor": '#000000',
-        "mainAccentColor": '#BB86FC',
-        "secondaryAccentColor": '#6200EE',
+        "mainBackgroundColor": '#191F26',
+        "columnBackgroundColor": '#12181F',
+        "pageBackgroundColor": '#060B10',
+        "mainAccentColor": '#32E6E2',
+        "secondaryAccentColor": '#32E6E2',
+        "taskAccentColor": '#0C2A2A',
+        "addTaskPush": '#0C2A2A',
+        "purpleColor": '#6200EE',
       },
       animation: {
         'custom-fade-in': 'fadeIn 2s ease-in-out',

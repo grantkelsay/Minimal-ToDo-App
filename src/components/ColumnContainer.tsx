@@ -184,7 +184,7 @@ function ColumnContainer(props: Props) {
             border-x-columnBackgroundColor 
             hover:bg-mainBackgroundColor 
             hover:text-mainAccentColor
-            active:bg-black
+            active:bg-addTaskPush
         "
         onClick={() => createTask(column.id, "#6200EE", true)}>
             <PlusIcon />

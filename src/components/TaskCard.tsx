@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import TrashIcon from "../icons/TrashIcon";
 import { Id, Task } from "../types"
 import { useSortable } from "@dnd-kit/sortable";
@@ -8,7 +8,7 @@ import ElipseIcon from "../icons/ElipseIcon";
 interface Props {
     task: Task;
     deleteTask: (id: Id) => void;
-    updateTask: (id: Id, content: string, backgroundColor: string) => void;
+    updateTask: (id: Id, content: string, backgroundColor: string, isNew: boolean) => void;
 }
 
 function TaskCard({task, deleteTask, updateTask}: Props) {
@@ -47,7 +47,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
     const handleColorSelection = (selectedColor: string) => {
         setBackgroundColor(selectedColor);
         setColorDropdownVisible(false);
-        updateTask(task.id, task.content, selectedColor); // Pass the selected color to the updateTask function
+        updateTask(task.id, task.content, selectedColor, false); // Pass the selected color to the updateTask function
         console.log("selected color: " + selectedColor);
     };
 
@@ -59,11 +59,15 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         }
     }
 
+    const handleOnBlur = () => {
+        toggleEditMode();
+        updateTask(task.id, task.content, task.backgroundColor, false)
+    }
+
     const toggleEditMode = () => {
         task.isNew = false;
         setEditMode((prevEditMode) => !prevEditMode);
-        console.log("new edit mode: " + editMode);
-        console.log("new isNew mode: " + task.isNew);
+        
         setMouseIsOver(false);
     }
 
@@ -136,13 +140,13 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             value={task.content}
             autoFocus
             placeholder="Task content here"
-            onBlur={handleClick}
+            onBlur={handleOnBlur}
             onKeyDown={(e) => {
                 if (e.key === "Enter" && e.shiftKey) {
                     handleClick();
                 }
             }}
-            onChange={e => updateTask(task.id, e.target.value, task.backgroundColor)}
+            onChange={e => updateTask(task.id, e.target.value, task.backgroundColor, false)}
             />
         </div>)
     }
@@ -189,7 +193,8 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             >{task.content}</p>
             
             { mouseIsOver && (
-                <button onClick={() => {
+                <button onClick={(e) => {
+                    //e.stopPropagation();
                     deleteTask(task.id);
                 }}
                 className="

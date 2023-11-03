@@ -50,12 +50,15 @@ function KanbanBoard() {
             if (savedColumns) {
                 setColumns(savedColumns);
             }
+
+            console.log(savedColumns);
             // Load tasks from local storage
             const savedTasks = loadDataFromLocalStorage("tasks");
             if (savedTasks) {
                 setTasks(savedTasks);
             }
 
+            console.log(tasks);
             // Set our initialized variable to true
             isInitialized.current = true;
         }
@@ -263,7 +266,7 @@ function KanbanBoard() {
         setColumns([...columns, columnToAdd]);
     }
 
-    function createTask(columnId: Id, backgroundColor: string, isNew: boolean) {
+    function createTask(columnId: Id, backgroundColor: string, isNew: boolean, editMode: boolean) {
         const newTask: Task = {
             id: generateId(),
             columnId,
@@ -282,7 +285,7 @@ function KanbanBoard() {
         setTasks(newTasks);
     }
 
-    function updateTask(id: Id, content: string, backgroundColor: string) {
+    function updateTask(id: Id, content: string, backgroundColor: string, isNew: boolean) {
         const newTasks = tasks.map(task => {
             if (task.id !== id) return task;
             return {...task, content, backgroundColor};
@@ -311,10 +314,10 @@ function KanbanBoard() {
         setTasks(newTasks);
     }
 
-    function updateColumn(id: Id, title: string) {
+    function updateColumn(id: Id, title: string, isNew: boolean) {
         const newColumns = columns.map(col => {
             if (col.id !== id) return col;
-            return {...col, title};
+            return {...col, title, isNew};
         });
 
         setColumns(newColumns);

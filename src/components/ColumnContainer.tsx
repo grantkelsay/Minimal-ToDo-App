@@ -9,17 +9,17 @@ import TaskCard from "./TaskCard";
 interface Props {
     column: Column;
     deleteColumn: (id: Id) => void;
-    updateColumn: (id: Id, title: string) => void;
-    createTask: (columnId: Id, backgroundColor: string, isNew: boolean) => void;
+    updateColumn: (id: Id, title: string, isNew: boolean) => void;
+    createTask: (columnId: Id, backgroundColor: string, isNew: boolean, editMode: boolean) => void;
     tasks: Task[];
     deleteTask: (id: Id) => void;
-    updateTask: (id: Id, content: string, backgroundColor: string) => void;
+    updateTask: (id: Id, content: string, backgroundColor: string, isNew: boolean) => void;
 }
 
 function ColumnContainer(props: Props) {
     const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask} = props;
 
-    const [editMode, setEditMode] = useState(true);
+    const [editMode, setEditMode] = useState(column.isNew);
 
     const inputRef = useRef<HTMLInputElement | null>(null); // Define the ref type
 
@@ -37,19 +37,21 @@ function ColumnContainer(props: Props) {
         disabled: editMode,
     });
 
+    // console.log("column.editMode on start: " + column.isNew);
+    // console.log("editMode on start: " + editMode);
+
     const handleColumnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key != "Enter") return;
-        setEditMode(false);
-        column.isNew = false;
+        setEditMode((prev) => !prev);
+        updateColumn(column.id, column.title, false)
         //console.log("column status: " + column.isNew);
         //console.log("edit status: " + editMode);
     }
 
     const handleColumnBlur = () => {
-        setEditMode(false);
-        column.isNew = false;
-        //console.log("column status: " + column.isNew);
-        //console.log("edit status: " + editMode);
+        setEditMode((prev) => !prev);
+        updateColumn(column.id, column.title, false)
+
     }
 
     const style = {
@@ -135,7 +137,7 @@ function ColumnContainer(props: Props) {
                         outline-none 
                         px-2"
                         value = {column.title}
-                        onChange={ e => updateColumn(column.id, e.target.value)}
+                        onChange={ e => updateColumn(column.id, e.target.value, false)}
                         autoFocus 
                         onBlur={handleColumnBlur}
                         onKeyDown={handleColumnKeyDown}
@@ -195,7 +197,7 @@ function ColumnContainer(props: Props) {
             hover:text-mainAccentColor
             active:bg-addTaskPush
         "
-        onClick={() => createTask(column.id, "#6200EE", true)}>
+        onClick={() => createTask(column.id, "#6200EE", true, true)}>
             <PlusIcon />
             Add Task</button>
         </div>

@@ -255,9 +255,11 @@ function KanbanBoard() {
         const columnToAdd:Column = {
             id: generateId(),
             title: `Column ${columns.length + 1}`,
+            isNew: true,
         };
 
         // Update the 'columns' state by adding the new column
+        console.log(columnToAdd);
         setColumns([...columns, columnToAdd]);
     }
 

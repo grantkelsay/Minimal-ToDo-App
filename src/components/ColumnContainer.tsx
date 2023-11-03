@@ -2,7 +2,7 @@ import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import TrashIcon from "../icons/TrashIcon";
 import { Column, Id, Task } from "../types";
 import {CSS} from "@dnd-kit/utilities";
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import PlusIcon from "../icons/PlusIcon";
 import TaskCard from "./TaskCard";
 
@@ -20,6 +20,8 @@ function ColumnContainer(props: Props) {
     const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask} = props;
 
     const [editMode, setEditMode] = useState(false);
+
+    const inputRef = useRef<HTMLInputElement | null>(null); // Define the ref type
 
     const tasksIds = useMemo(() => {
         return tasks.map(task => task.id);
@@ -69,6 +71,9 @@ function ColumnContainer(props: Props) {
         <div {...attributes} {...listeners} 
         onClick={() => { 
             setEditMode(true); 
+            if (inputRef.current) {
+                inputRef.current.select();
+            }
         }}
         className="
         bg-mainBackgroundColor
@@ -101,9 +106,11 @@ function ColumnContainer(props: Props) {
                 rounded-full
                 "
                 >{tasks.length}</div>
-                {!editMode && column.title}
-                {editMode && (
+                {!editMode && !column.isNew ? (
+                    column.title
+                ) : (
                     <input 
+                        ref={inputRef}
                         className="
                         bg-black 
                         focus:border-mainAccentColor
@@ -116,10 +123,12 @@ function ColumnContainer(props: Props) {
                         autoFocus 
                         onBlur = {() => {
                             setEditMode(false);
+                            column.isNew = false;
                         }}
                         onKeyDown={e => {
                             if (e.key != "Enter") return;
                             setEditMode(false);
+                            column.isNew = false;
                         }}
                     />
                 )}

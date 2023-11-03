@@ -13,7 +13,7 @@ function KanbanBoard() {
     // Holds the state of the columns object array
     const [columns, setColumns] = useState<Column[]>([]);
 
-    const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+    const [backgroundColor] = useState('#FFFFFF');
 
     const [tasks, setTasks] = useState<Task[]>([]);
 

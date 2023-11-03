@@ -18,6 +18,8 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
     const [editMode, setEditMode] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState<string>("#6200EE");
     const [colorDropdownVisible, setColorDropdownVisible] = useState(false);
+    const [isColorPickerClicked, setIsColorPickerClicked] = useState(false);
+
 
     const { setNodeRef, attributes, listeners, transform, transition, isDragging } 
     = useSortable({
@@ -49,6 +51,12 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         updateTask(task.id, task.content, selectedColor); // Pass the selected color to the updateTask function
         console.log("selected color: " + selectedColor);
     };
+
+    const handleClick = () => {
+        if (!isColorPickerClicked) {
+            toggleEditMode();
+        }
+    }
 
     const toggleEditMode = () => {
         setEditMode((prev) => !prev);
@@ -92,156 +100,159 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
         }}
         {...attributes}
         {...listeners}
-            className="
-            p-2.5
-            h-[100px]
-            min-h-[100px]
-            items-center
-            flex
-            text-left
-            rounded-xl
-            hover:ring-2
-            hover:ring-inset
-            hover:ring-mainAccentColor
-            cursor-grab
-            relative"
-            >
-                <textarea className="
-                h-[90%]
-                w-full
-                resize-none
-                ring-2
-                ring-outset
-                ring-mainAccentColor
-                rounded-lg
-                p-3
-                rounded
-                bg-transparent
-                text-white
-                opacity-60
-                focus:outline-none"
-                value={task.content}
-                autoFocus
-                placeholder="Task content here"
-                onBlur={toggleEditMode}
-                onKeyDown={(e) => {
-                    if (e.key === "Enter" && e.shiftKey) toggleEditMode();
-                }}
-                onChange={e => updateTask(task.id, e.target.value, colorOptions[0].value)}
-                />
-            </div>)
+        className="
+        p-2.5
+        h-[100px]
+        min-h-[100px]
+        items-center
+        flex
+        text-left
+        rounded-xl
+        hover:ring-2
+        hover:ring-inset
+        hover:ring-mainAccentColor
+        cursor-grab
+        relative"
+        >
+            <textarea className="
+            h-[90%]
+            w-full
+            resize-none
+            ring-2
+            ring-outset
+            ring-mainAccentColor
+            rounded-lg
+            p-3
+            rounded
+            bg-transparent
+            text-white
+            opacity-60
+            focus:outline-none"
+            value={task.content}
+            autoFocus
+            placeholder="Task content here"
+            onBlur={toggleEditMode}
+            onKeyDown={(e) => {
+                if (e.key === "Enter" && e.shiftKey) toggleEditMode();
+            }}
+            onChange={e => updateTask(task.id, e.target.value, colorOptions[0].value)}
+            />
+        </div>)
     }
 
-  return (
-    <div 
-    ref={setNodeRef}
-    style={{
-        ...style,
-        backgroundColor: task.backgroundColor,
-    }}
-    {...attributes}
-    {...listeners}
-    onClick={toggleEditMode}
-    className="
-    p-2.5
-    h-[100px]
-    min-h-[100px]
-    items-center
-    flex
-    text-left
-    rounded-xl
-    hover:ring-2
-    hover:ring-inset
-    hover:ring-mainAccentColor
-    cursor-grab
-    relative
-    task"
-    onMouseEnter={() => {
-        setMouseIsOver(true);
-    }}
-    onMouseLeave={() => {
-        setMouseIsOver(false);
-        setColorDropdownVisible(false);
-    }}
-    >
-        <p className="
-        my-auto
-        h-[90%]
-        w-full
-        overflow-y-auto
-        overflow-x-hidden
-        whitespace-pre-wrap"
-        >{task.content}</p>
-        
-        { mouseIsOver && (
-            <button onClick={() => {
-                deleteTask(task.id);
-            }}
-            className="
-                stroke-white
-                absolute
-                right-4
-                top-1/2-translate-y-1/2
-                bg-columnBackgroundColor
-                p-2
-                rounded
-                opacity-60
-                hover:opacity-100
-                ">
-                <TrashIcon />
-            </button>
-        )}
-
-        { mouseIsOver && (
-            <button onClick={(e) => {
-                e.stopPropagation();
-                setColorDropdownVisible((prev) => !prev); // Toggle the dropdown visibility
-            }}
-            className="
-                stroke-white
-                absolute
-                right-16
-                bg-columnBackgroundColor
-                p-2
-                rounded
-                opacity-60
-                hover:opacity-100
-                ">
-                <ElipseIcon />
-            </button>
-        )}
-
-        { mouseIsOver && colorDropdownVisible && (
-            <div className="absolute top-20 right-9 " style={{ zIndex: 9999 }}>
-                <div
-                    className="
-                    flex
+    return (
+        <div 
+        ref={setNodeRef}
+        style={{
+            ...style,
+            backgroundColor: task.backgroundColor,
+        }}
+        {...attributes}
+        {...listeners}
+        onClick={handleClick}
+        className="
+        p-2.5
+        h-[100px]
+        min-h-[100px]
+        items-center
+        flex
+        text-left
+        rounded-xl
+        hover:ring-2
+        hover:ring-inset
+        hover:ring-mainAccentColor
+        cursor-grab
+        relative
+        task"
+        onMouseEnter={() => {
+            setMouseIsOver(true);
+        }}
+        onMouseLeave={() => {
+            setMouseIsOver(false);
+            setColorDropdownVisible(false);
+        }}
+        >
+            <p className="
+            my-auto
+            h-[90%]
+            w-full
+            overflow-y-auto
+            overflow-x-hidden
+            whitespace-pre-wrap"
+            >{task.content}</p>
+            
+            { mouseIsOver && (
+                <button onClick={() => {
+                    deleteTask(task.id);
+                }}
+                className="
+                    stroke-white
+                    absolute
+                    right-4
+                    top-1/2-translate-y-1/2
                     bg-columnBackgroundColor
-                    border
-                    border-mainAccentColor
-                    p-3
-                    rounded-full
-                    gap-2
-                    items-center
-                    font-bold
+                    p-2
+                    rounded
+                    opacity-60
+                    hover:opacity-100
+                    ">
+                    <TrashIcon />
+                </button>
+            )}
+
+            { mouseIsOver && (
+                <button onClick={(e) => {
+                    e.stopPropagation();
+                    setColorDropdownVisible((prev) => !prev); // Toggle the dropdown visibility
+                    setIsColorPickerClicked((prev) => !prev);
+                }}
+                className="color-options-button
+                    stroke-white
+                    absolute
+                    right-16
+                    bg-columnBackgroundColor
+                    p-2
+                    rounded
+                    opacity-60
+                    hover:opacity-100
                     "
-                    style={{ zIndex: 9999 }}
                 >
-                    <p>Task color: </p>
-                    {colorOptions.map((colorOption) => (
+                    <ElipseIcon />
+                </button>
+            )}
+
+            { mouseIsOver && colorDropdownVisible && (
+                <div className="absolute top-20 right-9 " style={{ zIndex: 9999 }}>
                     <div
-                        key={colorOption.value}
-                        className={`w-6 h-6 ${colorOption.label} rounded-full cursor-pointer`}
-                        onClick={() => {
-                            handleColorSelection(colorOption.value); // Call the handler function
-                        }}
-                    ></div>
-                    ))}
+                        className="
+                        flex
+                        bg-columnBackgroundColor
+                        border
+                        border-mainAccentColor
+                        p-3
+                        rounded-full
+                        gap-2
+                        items-center
+                        font-bold
+                        "
+                        style={{ zIndex: 9999 }}
+                    >
+                        <p>Task color: </p>
+                        {colorOptions.map((colorOption) => (
+                        <div
+                            key={colorOption.value}
+                            className={`w-6 h-6 ${colorOption.label} rounded-full cursor-pointer`}
+                            onClick={() => {
+                                handleColorSelection(colorOption.value); // Call the handler function
+                                setIsColorPickerClicked(false);
+                            }}
+                        ></div>
+                        ))}
+                    </div>
                 </div>
-            </div>
-        )}
-    </div>
-  )
+            )}
+        </div>
+    )
 }
 
 export default TaskCard

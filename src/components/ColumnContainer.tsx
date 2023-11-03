@@ -19,7 +19,7 @@ interface Props {
 function ColumnContainer(props: Props) {
     const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask} = props;
 
-    const [editMode, setEditMode] = useState(false);
+    const [editMode, setEditMode] = useState(true);
 
     const inputRef = useRef<HTMLInputElement | null>(null); // Define the ref type
 
@@ -36,6 +36,21 @@ function ColumnContainer(props: Props) {
         },
         disabled: editMode,
     });
+
+    const handleColumnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key != "Enter") return;
+        setEditMode(false);
+        column.isNew = false;
+        //console.log("column status: " + column.isNew);
+        //console.log("edit status: " + editMode);
+    }
+
+    const handleColumnBlur = () => {
+        setEditMode(false);
+        column.isNew = false;
+        //console.log("column status: " + column.isNew);
+        //console.log("edit status: " + editMode);
+    }
 
     const style = {
         transition,
@@ -71,6 +86,7 @@ function ColumnContainer(props: Props) {
         <div {...attributes} {...listeners} 
         onClick={() => { 
             setEditMode(true); 
+            //console.log("onClick editMode: " + editMode);
             if (inputRef.current) {
                 inputRef.current.select();
             }
@@ -121,15 +137,8 @@ function ColumnContainer(props: Props) {
                         value = {column.title}
                         onChange={ e => updateColumn(column.id, e.target.value)}
                         autoFocus 
-                        onBlur = {() => {
-                            setEditMode(false);
-                            column.isNew = false;
-                        }}
-                        onKeyDown={e => {
-                            if (e.key != "Enter") return;
-                            setEditMode(false);
-                            column.isNew = false;
-                        }}
+                        onBlur={handleColumnBlur}
+                        onKeyDown={handleColumnKeyDown}
                     />
                 )}
             </div>

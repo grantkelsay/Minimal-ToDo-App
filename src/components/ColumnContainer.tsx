@@ -10,10 +10,11 @@ interface Props {
     column: Column;
     deleteColumn: (id: Id) => void;
     updateColumn: (id: Id, title: string) => void;
-    createTask: (columnId: Id) => void;
+    createTask: (columnId: Id, backgroundColor: string) => void;
     tasks: Task[];
     deleteTask: (id: Id) => void;
-    updateTask: (id: Id, content: string) => void;
+    updateTask: (id: Id, content: string, backgroundColor: string) => void;
+    backgroundColor: string;
 }
 
 function ColumnContainer(props: Props) {
@@ -158,6 +159,7 @@ function ColumnContainer(props: Props) {
                     task={task} 
                     deleteTask={deleteTask}
                     updateTask={updateTask}
+                    backgroundColor={task.backgroundColor}
                     />
                 ))}
             </SortableContext>
@@ -177,7 +179,7 @@ function ColumnContainer(props: Props) {
             hover:text-mainAccentColor
             active:bg-black
         "
-        onClick={() => createTask(column.id)}>
+        onClick={() => createTask(column.id, "#6200EE")}>
             <PlusIcon />
             Add Task</button>
         </div>

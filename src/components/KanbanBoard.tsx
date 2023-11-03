@@ -13,6 +13,8 @@ function KanbanBoard() {
     // Holds the state of the columns object array
     const [columns, setColumns] = useState<Column[]>([]);
 
+    const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+
     const [tasks, setTasks] = useState<Task[]>([]);
 
     // Stores resulting map of column IDs
@@ -116,6 +118,7 @@ function KanbanBoard() {
                                     createTask={createTask}
                                     deleteTask={deleteTask}
                                     updateTask={updateTask}
+                                    backgroundColor={backgroundColor}
                                     tasks={tasks.filter(task => task.columnId === col.id)}
                                     />
                                 ))}
@@ -153,11 +156,13 @@ function KanbanBoard() {
                                 tasks={tasks.filter(task => task.columnId === activeColumn.id)}
                                 deleteTask={deleteTask}
                                 updateTask={updateTask}
+                                backgroundColor={backgroundColor}
                             />
                             )}
                             {activeTask && (<TaskCard task={activeTask} 
                                 deleteTask={deleteTask}
                                 updateTask={updateTask}
+                                backgroundColor={backgroundColor}
                             />
                             )}
                     </DragOverlay>, document.body)}
@@ -193,6 +198,7 @@ function KanbanBoard() {
                                 createTask={createTask}
                                 deleteTask={deleteTask}
                                 updateTask={updateTask}
+                                backgroundColor={backgroundColor}
                                 tasks={tasks.filter(task => task.columnId === col.id)}
                                 />
                             ))}
@@ -231,11 +237,13 @@ function KanbanBoard() {
                             tasks={tasks.filter(task => task.columnId === activeColumn.id)}
                             deleteTask={deleteTask}
                             updateTask={updateTask}
+                            backgroundColor={backgroundColor}
                         />
                         )}
                         {activeTask && (<TaskCard task={activeTask} 
                             deleteTask={deleteTask}
                             updateTask={updateTask}
+                            backgroundColor={backgroundColor}
                         />
                         )}
                 </DragOverlay>, document.body)}
@@ -261,11 +269,12 @@ function KanbanBoard() {
         setColumns([...columns, columnToAdd]);
     }
 
-    function createTask(columnId: Id) {
+    function createTask(columnId: Id, backgroundColor: string) {
         const newTask: Task = {
             id: generateId(),
             columnId,
             content: `Task ${tasks.length + 1}`,
+            backgroundColor,
         }
 
         setTasks([...tasks, newTask]);
@@ -277,12 +286,13 @@ function KanbanBoard() {
         setTasks(newTasks);
     }
 
-    function updateTask(id: Id, content: string) {
+    function updateTask(id: Id, content: string, backgroundColor: string) {
         const newTasks = tasks.map(task => {
             if (task.id !== id) return task;
-            return {...task, content};
+            return {...task, content, backgroundColor};
+            
         });
-
+        console.log("task.backgroundColor: " + backgroundColor);
         setTasks(newTasks);
     }
 

@@ -266,7 +266,7 @@ function KanbanBoard() {
         setColumns([...columns, columnToAdd]);
     }
 
-    function createTask(columnId: Id, backgroundColor: string, isNew: boolean, editMode: boolean) {
+    function createTask(columnId: Id, backgroundColor: string, isNew: boolean) {
         const newTask: Task = {
             id: generateId(),
             columnId,
@@ -285,7 +285,7 @@ function KanbanBoard() {
         setTasks(newTasks);
     }
 
-    function updateTask(id: Id, content: string, backgroundColor: string, isNew: boolean) {
+    function updateTask(id: Id, content: string, backgroundColor: string) {
         const newTasks = tasks.map(task => {
             if (task.id !== id) return task;
             return {...task, content, backgroundColor};

@@ -193,7 +193,7 @@ function TaskCard({task, deleteTask, updateTask}: Props) {
             >{task.content}</p>
             
             { mouseIsOver && (
-                <button onClick={(e) => {
+                <button onClick={() => {
                     //e.stopPropagation();
                     deleteTask(task.id);
                 }}

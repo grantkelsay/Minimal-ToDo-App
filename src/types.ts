@@ -13,3 +13,10 @@ export type Task = {
     backgroundColor: string;
     isNew: boolean;
 }
+
+export type Board = {
+    id: Id;
+    name: string;
+    columns: Column[];
+    tasks: Task[];
+}

@@ -88,7 +88,6 @@ function ColumnContainer(props: Props) {
         <div {...attributes} {...listeners} 
         onClick={() => { 
             setEditMode(true); 
-            //console.log("onClick editMode: " + editMode);
             if (inputRef.current) {
                 inputRef.current.select();
             }
@@ -195,7 +194,7 @@ function ColumnContainer(props: Props) {
             border-x-columnBackgroundColor 
             hover:bg-mainBackgroundColor 
             hover:text-mainAccentColor
-            active:bg-addTaskPush
+            active:bg-pageBackgroundColor
         "
         onClick={() => createTask(column.id, "#6200EE", true, true)}>
             <PlusIcon />

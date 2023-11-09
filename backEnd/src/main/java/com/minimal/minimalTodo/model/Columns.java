@@ -24,7 +24,7 @@ public class Columns {
         this.isNew = false;
     }
 
-    public Columns(int id, String title, Boolean isNew) {
+    public Columns(int id, Boolean isNew,  String title) {
         this.id = id;
         this.title = title;
         this.isNew = isNew;

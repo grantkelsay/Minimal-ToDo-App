@@ -16,10 +16,10 @@ public class MinimalTodoApplicationInitializer {
     @Bean
     CommandLineRunner initializeData(TasksRepository taskrepo, ColumnsRepository colrepo) {
         return args -> {
-            Columns col1 = new Columns(1, "Todo", false);
-            Columns col2 = new Columns(2, "In Progress", false);
-            Columns col3 = new Columns(3, "Complete", false);
-            Columns col4 = new Columns(3, "Awaiting Feedback", false);
+            Columns col1 = new Columns(1, false, "Todo");
+            Columns col2 = new Columns(2, false, "In Progress");
+            Columns col3 = new Columns(3, false, "Complete");
+            Columns col4 = new Columns(3, false, "Awaiting Feedback");
 
             colrepo.save(col1);
             colrepo.save(col2);

@@ -51,7 +51,6 @@ function ColumnContainer(props: Props) {
     const handleColumnBlur = () => {
         setEditMode((prev) => !prev);
         updateColumn(column.id, column.title, false)
-
     }
 
     const style = {

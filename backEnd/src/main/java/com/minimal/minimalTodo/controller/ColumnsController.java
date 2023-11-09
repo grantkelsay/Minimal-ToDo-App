@@ -3,6 +3,7 @@ package com.minimal.minimalTodo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@CrossOrigin
 public class ColumnsController {
     
     private final ColumnsRepository colsRepo;
@@ -76,6 +78,34 @@ public class ColumnsController {
 
         // Else return 404
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/updateColumns")
+    public ResponseEntity<List<Columns>> updateColumns(@RequestBody Columns[] updatedColumnData) {
+
+        List<Columns> updatedColumns = new ArrayList<>();
+
+        for (Columns col : updatedColumnData) {
+
+            Optional<Columns> existingColumn = colsRepo.findById(col.getId());
+
+            if (existingColumn.isPresent()) {
+                // Create a copy of the old column and update it with the
+                //  new information
+                Columns existing = existingColumn.get();
+                existing.setTitle(col.getTitle());
+                existing.setIsNew(col.getIsNew());
+
+                // Save to the repo
+                updatedColumns.add(colsRepo.save(existing));
+            } else {
+                // Else return 404
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        // Return 200
+        return new ResponseEntity<>(updatedColumns, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/deleteColumnById/{id}")

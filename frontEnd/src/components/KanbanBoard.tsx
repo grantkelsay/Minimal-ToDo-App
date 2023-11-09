@@ -261,8 +261,15 @@ function KanbanBoard() {
             isNew: true,
         };
 
+        // Send the new column information to the API endpoint
+        fetch("http://localhost:9090/addColumn", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(columnToAdd)
+        }).then(() => {console.log("Added new column to database: " + JSON.stringify(columnToAdd))})
+
         // Update the 'columns' state by adding the new column
-        console.log(columnToAdd);
+        //console.log(columnToAdd);
         setColumns([...columns, columnToAdd]);
     }
 
@@ -319,6 +326,13 @@ function KanbanBoard() {
             if (col.id !== id) return col;
             return {...col, title, isNew};
         });
+
+        // Update column information to the API endpoint 'updateColumns'
+        fetch("http://localhost:9090/updateColumns", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newColumns)
+        }).then(() => {console.log("Added new column to database: " + JSON.stringify(newColumns))})
 
         setColumns(newColumns);
     }

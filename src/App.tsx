@@ -1,8 +1,9 @@
 import './App.css'
 import KanbanBoard from './components/KanbanBoard'
+import LoginScreen from './components/LoginScreen'
 
 function App() {
-    return  <KanbanBoard />
+    return  <LoginScreen />
 }
 
 export default App

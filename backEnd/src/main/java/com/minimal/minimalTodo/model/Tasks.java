@@ -6,7 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 
 
-@Table(name = "todoTasks")
+@Table(name = "Tasks")
 @Entity
 public class Tasks {
     

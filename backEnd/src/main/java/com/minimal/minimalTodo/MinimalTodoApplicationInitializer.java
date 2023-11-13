@@ -6,15 +6,18 @@ import org.springframework.context.annotation.Configuration;
 
 import com.minimal.minimalTodo.model.Columns;
 import com.minimal.minimalTodo.model.Tasks;
+import com.minimal.minimalTodo.model.Users;
 import com.minimal.minimalTodo.repository.ColumnsRepository;
 import com.minimal.minimalTodo.repository.TasksRepository;
+import com.minimal.minimalTodo.repository.UsersRepository;
+
 
 
 @Configuration
 public class MinimalTodoApplicationInitializer {
 
     @Bean
-    CommandLineRunner initializeData(TasksRepository taskrepo, ColumnsRepository colrepo) {
+    CommandLineRunner initializeData(TasksRepository taskrepo, ColumnsRepository colrepo, UsersRepository userrepo) {
         return args -> {
             Columns col1 = new Columns(1, false, "Todo");
             Columns col2 = new Columns(2, false, "In Progress");
@@ -33,6 +36,12 @@ public class MinimalTodoApplicationInitializer {
             taskrepo.save(task1);
             taskrepo.save(task2);
             taskrepo.save(task3);
+
+            Users user1 = new Users("Sophia", "Sophia30");
+            Users user2 = new Users("Grant", "12345");
+
+            userrepo.save(user1);
+            userrepo.save(user2);
         };
     }
 

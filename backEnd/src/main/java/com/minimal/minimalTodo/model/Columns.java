@@ -5,7 +5,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 
-@Table(name = "todoCols")
+@Table(name = "Columns")
 @Entity
 public class Columns {
     

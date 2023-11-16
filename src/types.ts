@@ -20,3 +20,8 @@ export type Board = {
     columns: Column[];
     tasks: Task[];
 }
+
+export type User = {
+    userName: string;
+    userPass: string;
+}

@@ -22,6 +22,8 @@ export type Board = {
 }
 
 export type User = {
+    // columns: Column[];
+    // tasks: Task[];
     userName: string;
     userPass: string;
 }

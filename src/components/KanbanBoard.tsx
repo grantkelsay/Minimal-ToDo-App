@@ -2,6 +2,7 @@ import PlusIcon from "../icons/PlusIcon"
 import { useMemo, useState, useEffect, useRef } from "react";
 import { Column, Id, Task } from "../types";
 import ColumnContainer from "./ColumnContainer";
+import { useLocation } from 'react-router-dom';
 import { DndContext, DragEndEvent, DragOverEvent, DragOverlay, DragStartEvent, PointerSensor, useSensor, useSensors } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
@@ -9,6 +10,12 @@ import TaskCard from "./TaskCard";
 import ArrowIcon from "../icons/ArrowIcon";
 
 function KanbanBoard() {
+
+    const location = useLocation();
+    const { user } = location.state;
+
+    console.log("Active user: " + user.userName);
+    console.log("Active user password: " + user.userPass);
 
     // Holds the state of the columns object array
     const [columns, setColumns] = useState<Column[]>([]);

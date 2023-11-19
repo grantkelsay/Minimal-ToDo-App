@@ -4,6 +4,7 @@ export type Column = {
     id: Id;
     title: string;
     isNew: boolean,
+    user: User;
 }
 
 export type Task = {
@@ -12,6 +13,7 @@ export type Task = {
     content: string;
     backgroundColor: string;
     isNew: boolean;
+    user: User;
 }
 
 export type Board = {
@@ -22,8 +24,6 @@ export type Board = {
 }
 
 export type User = {
-    // columns: Column[];
-    // tasks: Task[];
     userName: string;
     userPass: string;
 }

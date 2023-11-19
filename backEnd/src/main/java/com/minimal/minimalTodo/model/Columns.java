@@ -5,12 +5,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.JoinColumn;
-import com.minimal.minimalTodo.model.Tasks;
-
-import java.util.List;
-import java.util.ArrayList;
 
 @Table(name = "Columns")
 @Entity
@@ -26,11 +21,8 @@ public class Columns {
     private Boolean isNew;
 
     @ManyToOne
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
     private Users user;
-
-    @OneToMany(mappedBy = "column")
-    private List<Tasks> tasks;
 
     public Columns() {
         this.id = 0;
@@ -44,10 +36,6 @@ public class Columns {
         this.title = title;
         this.isNew = isNew;
         this.user = user;
-    }
-
-    public List<Tasks> getTasks() {
-        return tasks;
     }
 
     public Users getUser() {
@@ -66,10 +54,6 @@ public class Columns {
         return isNew;
     }
 
-    public void setTasks(List<Tasks> tasks) {
-        this.tasks = tasks;
-    }
-
     public void setUser(Users user) {
         this.user = user;
     }
@@ -85,6 +69,4 @@ public class Columns {
     public void setIsNew(Boolean isNew) {
         this.isNew = isNew;
     }
-
-
 }

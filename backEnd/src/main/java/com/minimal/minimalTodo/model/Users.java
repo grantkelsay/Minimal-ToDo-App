@@ -12,10 +12,11 @@ import jakarta.persistence.GenerationType;
 @Entity
 public class Users {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    // private Integer id;
 
+    @Id
     @Column(name = "userName", unique = true, nullable = false)
     private String userName;
 
@@ -32,9 +33,9 @@ public class Users {
         this.userPass = userPass;
     }
 
-    public int getUserId() {
-        return this.id;
-    }
+    // public int getUserId() {
+    //     return this.id;
+    // }
 
     public String getUserName() {
         return this.userName;
@@ -44,9 +45,9 @@ public class Users {
         return this.userPass;
     }
 
-    public void setUserId(int id) {
-        this.id = id;
-    }
+    // public void setUserId(int id) {
+    //     this.id = id;
+    // }
 
     public void setUserName(String userName) {
         this.userName = userName;

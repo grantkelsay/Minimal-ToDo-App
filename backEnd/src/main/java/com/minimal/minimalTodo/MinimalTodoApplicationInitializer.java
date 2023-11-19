@@ -35,9 +35,9 @@ public class MinimalTodoApplicationInitializer {
             colrepo.save(col3);
             colrepo.save(col4);
 
-            Tasks task1 = new Tasks(1, 1, "Do the laundry", "#33B234", false, col1);
-            Tasks task2 = new Tasks(2, 1, "Take out trash", "#3Dbc43", true, col2);
-            Tasks task3 = new Tasks(3, 3, "Walk the dog", "#55g5ad", false, col3);
+            Tasks task1 = new Tasks(1, 1, "Do the laundry", "#33B234", false, user1);
+            Tasks task2 = new Tasks(2, 1, "Take out trash", "#3Dbc43", true, user1);
+            Tasks task3 = new Tasks(3, 3, "Walk the dog", "#55g5ad", false, user2);
 
             taskrepo.save(task1);
             taskrepo.save(task2);

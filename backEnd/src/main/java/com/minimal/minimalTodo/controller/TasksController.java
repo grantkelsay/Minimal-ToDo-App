@@ -12,21 +12,25 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minimal.minimalTodo.model.Tasks;
+import com.minimal.minimalTodo.model.Users;
 import com.minimal.minimalTodo.repository.TasksRepository;
+import com.minimal.minimalTodo.repository.UsersRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5174")
 public class TasksController {
     
     private final TasksRepository taskRepo;
+    private final UsersRepository usersRepo;
 
     @Autowired
-    public TasksController(TasksRepository taskRepo) {
+    public TasksController(TasksRepository taskRepo, UsersRepository usersRepo) {
         this.taskRepo = taskRepo;
+        this.usersRepo = usersRepo;
     }
 
     // Return the list of tasks stored in the H2 database
@@ -50,6 +54,30 @@ public class TasksController {
         }
     }
 
+    @GetMapping("/user/getTasksByName/{username}")
+    public ResponseEntity<List<Tasks>> getTasksByName(@PathVariable String username) {
+        try {
+            // Find the user by username
+            Optional<Users> user = usersRepo.findByUserName(username);
+    
+            if (user.isPresent()) {
+                // Retrieve columns associated with the user
+                List<Tasks> foundTasks = taskRepo.findByUser(user.get());
+    
+                if (foundTasks.isEmpty()) {
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+    
+                return new ResponseEntity<>(foundTasks, HttpStatus.OK);
+            } else {
+                // User not found
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping("/addTask")
     public ResponseEntity<Tasks> addTask(@RequestBody Tasks task) {
         Tasks taskObj = taskRepo.save(task);
@@ -57,7 +85,7 @@ public class TasksController {
         return new ResponseEntity<>(taskObj, HttpStatus.OK);
     }
 
-        @PostMapping("/updateTaskById/{id}")
+    @PostMapping("/updateTaskById/{id}")
     public ResponseEntity<Tasks> updateTaskById(@PathVariable Integer id, @RequestBody Tasks newTaskData) {
 
         // Retrieve the column using its id
@@ -80,6 +108,36 @@ public class TasksController {
 
         // Else return 404
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/updateTasks")
+    public ResponseEntity<List<Tasks>> updateTasks(@RequestBody Tasks[] updatedTaskData) {
+
+        List<Tasks> updatedTasks = new ArrayList<>();
+
+        for (Tasks tasks : updatedTaskData) {
+
+            Optional<Tasks> existingTasks = taskRepo.findById(tasks.getId());
+
+            if (existingTasks.isPresent()) {
+                // Create a copy of the old column and update it with the
+                //  new information
+                Tasks existing = existingTasks.get();
+                existing.setContent(tasks.getContent());
+                existing.setColumnId(tasks.getColumnId());
+                existing.setColor(tasks.getColor());
+                existing.setIsNew(tasks.getIsNew());
+
+                // Save to the repo
+                updatedTasks.add(taskRepo.save(existing));
+            } else {
+                // Else return 404
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        // Return 200
+        return new ResponseEntity<>(updatedTasks, HttpStatus.OK);
+
     }
 
     @DeleteMapping("/deleteTaskById/{id}")

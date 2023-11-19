@@ -8,15 +8,16 @@ import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import { createPortal } from "react-dom";
 import TaskCard from "./TaskCard";
 import ArrowIcon from "../icons/ArrowIcon";
+import axios from 'axios';
 
 function KanbanBoard() {
 
     const location = useLocation();
-    const { user } = location.state;
-    const username = user.userName;
+    const { currentUser } = location.state;
+    const username = currentUser.userName;
 
-    console.log("Active user: " + user.userName);
-    console.log("Active user password: " + user.userPass);
+    // console.log("Active user: " + user.userName);
+    // console.log("Active user password: " + user.userPass);
 
     // Holds the state of the columns object array
     const [columns, setColumns] = useState<Column[]>([]);
@@ -51,8 +52,21 @@ function KanbanBoard() {
 
     // Load column and task data from local storage
     useEffect (() => {
-        // If the page hasn't already been initialized
-        
+        const fetchData = async () => {
+            try {
+                const columnsResponse = await axios.get(`http://localhost:9090/user/getColumnsByName/${username}`);
+                console.log(columnsResponse.data);
+                setColumns(columnsResponse.data); // Update columns state with fetched data
+
+                const tasksResponse = await axios.get(`http://localhost:9090/user/getTasksByName/${username}`);
+                console.log(tasksResponse.data);
+                setTasks(tasksResponse.data); // Update columns state with fetched data
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        }
+        fetchData();
+        hideMenu();
     }, []);
 
     // Listen for changes to columns and save it to local storage
@@ -92,7 +106,7 @@ function KanbanBoard() {
                 opacity-100
                 animate-custom-fade-in"
                 >
-                    <p>Hello, {user.userName}</p> 
+                    <p>Hello, {currentUser.userName}</p> 
                     <p>Click the button below to begin</p>
                     <ArrowIcon />
                 </div>
@@ -248,6 +262,7 @@ function KanbanBoard() {
             id: generateId(),
             title: `Column ${columns.length + 1}`,
             isNew: true,
+            user: currentUser
         };
 
         // Send the new column information to the API endpoint
@@ -269,14 +284,28 @@ function KanbanBoard() {
             content: "Edit Task",
             backgroundColor,
             isNew,
+            user: currentUser
         }
-        //console.log(isNew);
+        //console.log(user);
+
+        // Send the new column information to the API endpoint
+        fetch("http://localhost:9090/addTask", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newTask)
+        }).then(() => {console.log("Added new task to database: " + JSON.stringify(newTask))})
 
         setTasks([...tasks, newTask]);
     }
 
     function deleteTask(id: Id) {
         const newTasks = tasks.filter((task) => task.id !== id);
+
+        // Send the new column information to the API endpoint
+        fetch(`http://localhost:9090/deleteTaskById/${id}`, {
+            method:"DELETE",
+            headers:{"Content-Type":"application/json"}
+        }).then(() => {console.log("Task deleted")})
 
         setTasks(newTasks);
     }
@@ -287,6 +316,14 @@ function KanbanBoard() {
             return {...task, content, backgroundColor};
             
         });
+
+        // Send the new column information to the API endpoint
+        fetch("http://localhost:9090/updateTasks", {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(newTasks)
+        }).then(() => {console.log("Added new task to database: " + JSON.stringify(newTasks))})
+
         //console.log("task.backgroundColor: " + backgroundColor);
         setTasks(newTasks);
     }
@@ -303,10 +340,18 @@ function KanbanBoard() {
     function deleteColumn(id: Id) {
         // Filters the 'columns' array to remove the column with the specified 'id'.
         const filteredColumns = columns.filter((col) => col.id !== id);
+
+        fetch(`http://localhost:9090/deleteColumnById/${id}`, {
+            method:"DELETE",
+            headers:{"Content-Type":"application/json"}
+        }).then(() => {console.log("Column deleted")})
+
+        
         // Sets the 'columns' state to the filtered array, removing the specified column.
         setColumns(filteredColumns);
 
         const newTasks = tasks.filter(t => t.columnId !== id);
+
         setTasks(newTasks);
     }
 
@@ -432,12 +477,6 @@ function KanbanBoard() {
     function saveDataToLocalStorage(key: string, data: any) {
         localStorage.setItem(key, JSON.stringify(data));
     }
-
-    function loadDataFromLocalStorage(key: string) {
-        const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : null;
-    }
-
 }
 
 export default KanbanBoard

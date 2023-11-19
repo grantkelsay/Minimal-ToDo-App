@@ -30,13 +30,13 @@ public class ColumnsController {
     
     private final ColumnsRepository colsRepo;
     private final UsersRepository usersRepo;
-    private final TasksRepository tasksRepo;
+    private final TasksRepository taskRepo;
 
     @Autowired
-    public ColumnsController(ColumnsRepository colsRepo, UsersRepository usersRepo, TasksRepository tasksRepo) {
+    public ColumnsController(ColumnsRepository colsRepo, UsersRepository usersRepo, TasksRepository taskRepo) {
         this.colsRepo = colsRepo;
         this.usersRepo = usersRepo;
-        this.tasksRepo = tasksRepo;
+        this.taskRepo = taskRepo;
     }
 
     // Return the list of columns stored in the H2 database
@@ -55,6 +55,30 @@ public class ColumnsController {
             // Else return 200
             return ResponseEntity.ok(columnList);
 
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/user/getColumnsByName/{username}")
+    public ResponseEntity<List<Columns>> getColumnsByName(@PathVariable String username) {
+        try {
+            // Find the user by username
+            Optional<Users> user = usersRepo.findByUserName(username);
+    
+            if (user.isPresent()) {
+                // Retrieve columns associated with the user
+                List<Columns> foundColumns = colsRepo.findByUser(user.get());
+    
+                if (foundColumns.isEmpty()) {
+                    return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                }
+    
+                return new ResponseEntity<>(foundColumns, HttpStatus.OK);
+            } else {
+                // User not found
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -121,14 +145,22 @@ public class ColumnsController {
     @DeleteMapping("/deleteColumnById/{id}")
     public ResponseEntity<Columns> deleteColumnById(@PathVariable Integer id) {
 
-        // If the column to be deleted is found by its id
-        if (colsRepo.findById(id) != null) {
+        Optional<Columns> column = colsRepo.findById(id);
+
+        if (column.isPresent()) {
+            // Fetch tasks associated with the columnId
+            List<Tasks> tasksToDelete = taskRepo.findByColumn(column.getId());
+    
+            // Delete associated tasks
+            taskRepo.deleteAll(tasksToDelete);
+    
+            // Delete the column
             colsRepo.deleteById(id);
+    
             return new ResponseEntity<>(HttpStatus.OK);
         }
-        
-        // Else return 404
+    
+        // If the column is not found, return 404
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        
     }
 }

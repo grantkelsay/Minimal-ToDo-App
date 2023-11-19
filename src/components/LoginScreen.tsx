@@ -127,7 +127,7 @@ function LoginScreen() {
     if (response.ok) {
       // User validated, navigate to '/task-board'
       navigate('/task-board', {
-        state: { user : userToValidate }
+        state: { currentUser : userToValidate }
       });
     } else if (response.status === 401) {
       // Unauthorized - display an error message

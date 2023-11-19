@@ -5,10 +5,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Id;
-import com.minimal.minimalTodo.model.Columns;
-
 
 @Table(name = "Tasks")
 @Entity
@@ -20,45 +17,48 @@ public class Tasks {
     @Column(name = "content")
     private String content;
 
+    @Column(name = "columndId")
+    private int columnId;
+
     @Column(name = "backgroundColor")
     private String color;
 
     @Column(name = "isNew")
     private Boolean isNew;
 
-    @JsonIgnoreProperties("tasks")
     @ManyToOne
-    @JoinColumn(name = "columnId", referencedColumnName = "id")
-    private Columns column;
+    @JoinColumn(name = "userName", referencedColumnName = "userName")
+    private Users user;
 
     public Tasks() {
         this.id = 0;
-        this.column = new Columns();
-        this.column.setId(0);
+        this.columnId = 0;
         this.content = "";
         this.color = "";
         this.isNew = false;
+        this.user = new Users();
     }
 
-    public Tasks(int id, int columnId, String content, String color, Boolean isNew, Columns col) {
+    public Tasks(int id, int columnId, String content, String color, Boolean isNew, Users user) {
         this.id = id;
-        this.column = col;
-        this.column.setId(columnId);
+        this.columnId = columnId;
         this.content = content;
         this.color = color;
         this.isNew = isNew;
+        this.user = user;
     }
 
     public int getId() {
         return id;
     }
 
-    public Columns getColumn() {
-        return column;
+
+    public Users getUser() {
+        return user;
     }
 
     public int getColumnId() {
-        return this.column.getId();
+        return columnId;
     }
 
     public String getContent() {
@@ -73,16 +73,17 @@ public class Tasks {
         return isNew;
     }
 
-    public void setColumn(Columns col) {
-        this.column = col;
+    public void setUser(Users user) {
+        this.user = user;
     }
+
 
     public void setId(int id) {
         this.id = id;
     }
 
     public void setColumnId(int columnId) {
-        this.column.setId(columnId);
+        this.columnId = columnId;
     }
 
     public void setContent(String content) {

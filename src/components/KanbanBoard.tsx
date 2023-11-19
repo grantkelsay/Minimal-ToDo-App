@@ -13,6 +13,7 @@ function KanbanBoard() {
 
     const location = useLocation();
     const { user } = location.state;
+    const username = user.userName;
 
     console.log("Active user: " + user.userName);
     console.log("Active user password: " + user.userPass);
@@ -51,24 +52,7 @@ function KanbanBoard() {
     // Load column and task data from local storage
     useEffect (() => {
         // If the page hasn't already been initialized
-        if (!isInitialized.current) {
-            
-            const savedColumns = loadDataFromLocalStorage("columns");
-            if (savedColumns) {
-                setColumns(savedColumns);
-            }
-
-            console.log(savedColumns);
-            // Load tasks from local storage
-            const savedTasks = loadDataFromLocalStorage("tasks");
-            if (savedTasks) {
-                setTasks(savedTasks);
-            }
-
-            console.log(tasks);
-            // Set our initialized variable to true
-            isInitialized.current = true;
-        }
+        
     }, []);
 
     // Listen for changes to columns and save it to local storage
@@ -103,15 +87,13 @@ function KanbanBoard() {
                 text-white
                 px-20
                 py-5
-                flex
                 flex-col
                 gap-4
                 opacity-100
                 animate-custom-fade-in"
                 >
-                    <p>Begin by clicking 'Add Column'</p>
-                    <p>shift + enter to stop editing tasks</p>
-                    <p>Drag and drop tasks and columns</p>
+                    <p>Hello, {user.userName}</p> 
+                    <p>Click the button below to begin</p>
                     <ArrowIcon />
                 </div>
                 <DndContext sensors={sensors} onDragStart={onDragStart} onDragEnd={onDragEnd} onDragOver={onDragOver}>

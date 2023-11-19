@@ -3,7 +3,11 @@ package com.minimal.minimalTodo.model;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Id;
+import com.minimal.minimalTodo.model.Columns;
 
 
 @Table(name = "Tasks")
@@ -12,9 +16,6 @@ public class Tasks {
     
     @Id
     private Integer id;
-
-    @Column(name = "columnId")
-    private int columnId;
 
     @Column(name = "content")
     private String content;
@@ -25,17 +26,24 @@ public class Tasks {
     @Column(name = "isNew")
     private Boolean isNew;
 
+    @JsonIgnoreProperties("tasks")
+    @ManyToOne
+    @JoinColumn(name = "columnId", referencedColumnName = "id")
+    private Columns column;
+
     public Tasks() {
         this.id = 0;
-        this.columnId = 0;
+        this.column = new Columns();
+        this.column.setId(0);
         this.content = "";
         this.color = "";
         this.isNew = false;
     }
 
-    public Tasks(int id, int columnId, String content, String color, Boolean isNew) {
+    public Tasks(int id, int columnId, String content, String color, Boolean isNew, Columns col) {
         this.id = id;
-        this.columnId = columnId;
+        this.column = col;
+        this.column.setId(columnId);
         this.content = content;
         this.color = color;
         this.isNew = isNew;
@@ -45,8 +53,12 @@ public class Tasks {
         return id;
     }
 
+    public Columns getColumn() {
+        return column;
+    }
+
     public int getColumnId() {
-        return columnId;
+        return this.column.getId();
     }
 
     public String getContent() {
@@ -61,12 +73,16 @@ public class Tasks {
         return isNew;
     }
 
+    public void setColumn(Columns col) {
+        this.column = col;
+    }
+
     public void setId(int id) {
         this.id = id;
     }
 
     public void setColumnId(int columnId) {
-        this.columnId = columnId;
+        this.column.setId(columnId);
     }
 
     public void setContent(String content) {

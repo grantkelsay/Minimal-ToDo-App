@@ -12,36 +12,36 @@ import com.minimal.minimalTodo.repository.TasksRepository;
 import com.minimal.minimalTodo.repository.UsersRepository;
 
 
-
 @Configuration
 public class MinimalTodoApplicationInitializer {
 
     @Bean
     CommandLineRunner initializeData(TasksRepository taskrepo, ColumnsRepository colrepo, UsersRepository userrepo) {
         return args -> {
-            Columns col1 = new Columns(1, false, "Todo");
-            Columns col2 = new Columns(2, false, "In Progress");
-            Columns col3 = new Columns(3, false, "Complete");
-            Columns col4 = new Columns(3, false, "Awaiting Feedback");
-
-            colrepo.save(col1);
-            colrepo.save(col2);
-            colrepo.save(col3);
-            colrepo.save(col4);
-
-            Tasks task1 = new Tasks(1, 1, "Do the laundry", "#33B234", false);
-            Tasks task2 = new Tasks(2, 1, "Take out trash", "#3Dbc43", true);
-            Tasks task3 = new Tasks(3, 3, "Walk the dog", "#55g5ad", false);
-
-            taskrepo.save(task1);
-            taskrepo.save(task2);
-            taskrepo.save(task3);
 
             Users user1 = new Users("Sophia", "Sophia30");
             Users user2 = new Users("Grant", "12345");
 
             userrepo.save(user1);
             userrepo.save(user2);
+
+            Columns col1 = new Columns(1, false, "Todo", user1);
+            Columns col2 = new Columns(2, false, "In Progress", user1);
+            Columns col3 = new Columns(3, false, "Complete", user2);
+            Columns col4 = new Columns(4, false, "Awaiting Feedback", user2);
+
+            colrepo.save(col1);
+            colrepo.save(col2);
+            colrepo.save(col3);
+            colrepo.save(col4);
+
+            Tasks task1 = new Tasks(1, 1, "Do the laundry", "#33B234", false, col1);
+            Tasks task2 = new Tasks(2, 1, "Take out trash", "#3Dbc43", true, col2);
+            Tasks task3 = new Tasks(3, 3, "Walk the dog", "#55g5ad", false, col3);
+
+            taskrepo.save(task1);
+            taskrepo.save(task2);
+            taskrepo.save(task3);
         };
     }
 

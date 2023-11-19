@@ -29,7 +29,6 @@ public class TasksController {
         this.taskRepo = taskRepo;
     }
 
-
     // Return the list of tasks stored in the H2 database
     @GetMapping("/tasks")
     public ResponseEntity<List<Tasks>> getAllTasks() {

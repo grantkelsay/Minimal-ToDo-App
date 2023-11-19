@@ -54,4 +54,11 @@ public class UsersController {
         }
     }
 
+    @PostMapping("/addUser")
+    public ResponseEntity<Users> addUser(@RequestBody Users user) {
+        Users userObj = userRepo.save(user);
+
+        return new ResponseEntity<>(userObj, HttpStatus.OK);
+    }
+
 }

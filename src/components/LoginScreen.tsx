@@ -4,13 +4,16 @@ import UserIcon from "../icons/UserIcon";
 import { useNavigate } from 'react-router-dom';
 import KanbanBoard from './KanbanBoard';
 import { Column, Task, User } from '../types';
+import BackIcon from '../icons/BackIcon';
 
 function LoginScreen() {
 
   const [editMode, setEditMode] = useState(false);
   const [newReg, setNewReg] = useState(false);
   const [password, setPassword] = useState('');
+  const [passwordCheck, setPasswordCheck] = useState('');
   const [userName, setUserName] = useState('');
+  const [passwordMismatchError, setPasswordMismatchError] = useState(false);
   // const [columns, setColumns] = useState<Column[]>([]);
   // const [tasks, setTasks] = useState<Task[]>([]);
   const [user, setUser] = useState<User>();
@@ -26,12 +29,76 @@ function LoginScreen() {
     setPassword(event.target.value)
   }
 
+  const handlePasswordCheck = (event: ChangeEvent<HTMLInputElement>) => {
+    setPasswordCheck(event.target.value)
+  }
+
   const handleUserName = (event: ChangeEvent<HTMLInputElement>) => {
     setUserName(event.target.value)
   }
 
-  const handleNewRegistration = () => {
+  const handleRegistrationPage = () => {
     setNewReg((prev) => !prev);
+  }
+
+  const handleReturnLoginClick = () => {
+    setNewReg((prev) => !prev);
+  }
+
+  const handleNewRegistration = () => {
+
+    if(password === passwordCheck) {
+        const userToAdd:User = {
+          userName: userName,
+          userPass: password,
+          // columns: columns,
+          // tasks: tasks,
+        };
+
+        setUser(userToAdd);
+
+        console.log("Username: " + userName);
+        console.log("Password: " + password);
+        // console.log("Columns: " + columns);
+        // console.log("Tasks: " + tasks);
+
+        // Validate user information at API endpoint 'validateUser'
+        fetch("http://localhost:9090/addUser", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(userToAdd)
+      })
+      .then(response => {
+        if (response.ok) {
+          // User created successfully
+          console.log("Registration success");
+
+        } else if (response.status === 401) {
+          // Unauthorized - display an error message
+          console.log("Invalid password");
+          // You can show an error message to the user or handle it accordingly
+        } else if (response.status === 404) {
+          // User not found - display an error message
+          console.log("User not found");
+          // You can show an error message to the user or handle it accordingly
+        } else {
+          // Other error - display a generic error message
+          console.log("An error occurred");
+          // You can show a generic error message to the user or handle it accordingly
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        // Handle network errors or fetch-related issues
+      });
+
+      setPasswordMismatchError(false);
+      setNewReg((prev) => !prev);
+    } else {
+      setPasswordMismatchError(true);
+      console.log("Password doesn't match.");
+    }
+
   }
 
   const handleLoginClick = () => {
@@ -101,29 +168,39 @@ function LoginScreen() {
       <div className="
         bg-columnBackgroundColor
         w-[350px]
-        h-[460px]
+        h-[500px]
         max-h-[500px]
         rounded-xl
         flex
         flex-col
         p-8
       ">
-        <div className="
-          px-[13px]
-          text-[32px]
-          text-mainAccentColor
-          text-left
-          font-bold
-        ">
-          Create
-            <div className="
+          
+          <div className="
+          flex
+          justify-between
+            px-[13px]
+            text-[32px]
+            text-mainAccentColor
+            text-left
+            font-bold
+          ">
+            Create
+            <button className="stroke-mainAccentColor"
+            onClick={handleReturnLoginClick}
+            >
+              <BackIcon />
+            </button>
+              
+          </div>
+          <div className="
+            px-[13px]
             text-[18px]
             text-mainAccentColor
             text-left
             font-medium
             ">
               Account</div>
-        </div>
         
         <div className="
           flex
@@ -156,7 +233,7 @@ function LoginScreen() {
             }}/>
           </div>
           <div className="flex flex-col mb-2">
-            <input className="
+            <input type="password" className="
               bg-mainBackgroundColor
               text-md
               h-[60px]
@@ -179,7 +256,7 @@ function LoginScreen() {
             onClick={() => { 
               setEditMode(true); 
             }}/>
-            <input className="
+            <input type="password" className="
               bg-mainBackgroundColor
               text-md
               h-[60px]
@@ -196,18 +273,21 @@ function LoginScreen() {
               placeholder-opacity-50
             "
             placeholder="Confirm password" 
-            value={password}
-            onChange={handlePassword}
+            value={passwordCheck}
+            onChange={handlePasswordCheck}
             onClick={() => { 
               setEditMode(true); 
             }}/>
           </div>
         </div>
+        {newReg && passwordMismatchError && (
+            <div className="text-red-500 mt-2">Passwords do not match.</div>
+          )}
         <div className='
         flex
         flex-col
         items-center
-        mt-2
+        mt-6
         '>
           <button className="
             max-w-[200px]
@@ -301,7 +381,7 @@ function LoginScreen() {
             }}/>
           </div>
           <div className="flex flex-col mb-2">
-            <input className="
+            <input type="password" className="
               bg-mainBackgroundColor
               text-md
               h-[60px]
@@ -333,7 +413,7 @@ function LoginScreen() {
               hover:opacity-100
               text-[12px]
             "
-            onClick={handleNewRegistration}
+            onClick={handleRegistrationPage}
             >New? Register here</button>
           </div>
         </div>

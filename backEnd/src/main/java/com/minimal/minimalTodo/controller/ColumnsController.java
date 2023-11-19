@@ -12,21 +12,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minimal.minimalTodo.model.Columns;
+import com.minimal.minimalTodo.model.Tasks;
+import com.minimal.minimalTodo.model.Users;
 import com.minimal.minimalTodo.repository.ColumnsRepository;
+import com.minimal.minimalTodo.repository.UsersRepository;
+import com.minimal.minimalTodo.repository.TasksRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @CrossOrigin
 public class ColumnsController {
     
     private final ColumnsRepository colsRepo;
+    private final UsersRepository usersRepo;
+    private final TasksRepository tasksRepo;
 
     @Autowired
-    public ColumnsController(ColumnsRepository colsRepo) {
+    public ColumnsController(ColumnsRepository colsRepo, UsersRepository usersRepo, TasksRepository tasksRepo) {
         this.colsRepo = colsRepo;
+        this.usersRepo = usersRepo;
+        this.tasksRepo = tasksRepo;
     }
 
     // Return the list of columns stored in the H2 database
@@ -41,7 +51,7 @@ public class ColumnsController {
             if (columnList.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
+            System.out.println(columnList);
             // Else return 200
             return ResponseEntity.ok(columnList);
 

@@ -12,17 +12,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.minimal.minimalTodo.model.Columns;
-import com.minimal.minimalTodo.model.Tasks;
 import com.minimal.minimalTodo.model.Users;
 import com.minimal.minimalTodo.repository.ColumnsRepository;
 import com.minimal.minimalTodo.repository.UsersRepository;
-import com.minimal.minimalTodo.repository.TasksRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @CrossOrigin
@@ -30,13 +26,11 @@ public class ColumnsController {
     
     private final ColumnsRepository colsRepo;
     private final UsersRepository usersRepo;
-    private final TasksRepository taskRepo;
 
     @Autowired
-    public ColumnsController(ColumnsRepository colsRepo, UsersRepository usersRepo, TasksRepository taskRepo) {
+    public ColumnsController(ColumnsRepository colsRepo, UsersRepository usersRepo) {
         this.colsRepo = colsRepo;
         this.usersRepo = usersRepo;
-        this.taskRepo = taskRepo;
     }
 
     // Return the list of columns stored in the H2 database
@@ -149,10 +143,10 @@ public class ColumnsController {
 
         if (column.isPresent()) {
             // Fetch tasks associated with the columnId
-            List<Tasks> tasksToDelete = taskRepo.findByColumn(column.getId());
+            // List<Tasks> tasksToDelete = taskRepo.findByColumn(column.getId());
     
-            // Delete associated tasks
-            taskRepo.deleteAll(tasksToDelete);
+            // // Delete associated tasks
+            // taskRepo.deleteAll(tasksToDelete);
     
             // Delete the column
             colsRepo.deleteById(id);

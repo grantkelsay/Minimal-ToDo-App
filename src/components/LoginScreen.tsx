@@ -1,14 +1,11 @@
-import React, { ChangeEvent, useState } from 'react';
-import PassIcon from "../icons/PassIcon";
-import UserIcon from "../icons/UserIcon";
+import { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import KanbanBoard from './KanbanBoard';
-import { Column, Task, User } from '../types';
+import { User } from '../types';
 import BackIcon from '../icons/BackIcon';
 
 function LoginScreen() {
 
-  const [editMode, setEditMode] = useState(false);
+  // const [editMode, setEditMode] = useState(false);
   const [newReg, setNewReg] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
@@ -21,9 +18,9 @@ function LoginScreen() {
 
   const navigate = useNavigate();
 
-  const handleLoginBlur = () => {
-    setEditMode((prev) => !prev);
-  }
+  // const handleLoginBlur = () => {
+  //   setEditMode((prev) => !prev);
+  // }
 
   const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
     setPassword(event.target.value)
@@ -229,7 +226,7 @@ function LoginScreen() {
             value={userName}
             onChange={handleUserName}
             onClick={() => { 
-              setEditMode(true); 
+              //setEditMode(true); 
             }}/>
           </div>
           <div className="flex flex-col mb-2">
@@ -254,7 +251,7 @@ function LoginScreen() {
             value={password}
             onChange={handlePassword}
             onClick={() => { 
-              setEditMode(true); 
+              //setEditMode(true); 
             }}/>
             <input type="password" className="
               bg-mainBackgroundColor
@@ -276,7 +273,7 @@ function LoginScreen() {
             value={passwordCheck}
             onChange={handlePasswordCheck}
             onClick={() => { 
-              setEditMode(true); 
+              //setEditMode(true); 
             }}/>
           </div>
         </div>
@@ -377,7 +374,7 @@ function LoginScreen() {
             value={userName}
             onChange={handleUserName}
             onClick={() => { 
-              setEditMode(true); 
+              //setEditMode(true); 
             }}/>
           </div>
           <div className="flex flex-col mb-2">
@@ -401,7 +398,7 @@ function LoginScreen() {
             value={password}
             onChange={handlePassword}
             onClick={() => { 
-              setEditMode(true); 
+              //setEditMode(true); 
             }}/>
             <button className="
               rounded-xl

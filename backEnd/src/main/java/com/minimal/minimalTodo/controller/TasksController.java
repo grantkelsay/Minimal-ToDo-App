@@ -98,7 +98,7 @@ public class TasksController {
             Tasks updateTaskData = oldTaskData.get();
             updateTaskData.setColumnId(newTaskData.getColumnId());
             updateTaskData.setContent(newTaskData.getContent());
-            updateTaskData.setColor(newTaskData.getColor());
+            updateTaskData.setBackgroundColor(newTaskData.getbackgroundColor());
             updateTaskData.setIsNew(newTaskData.getIsNew());
 
             // Create a new columns object and save it to the repo
@@ -125,7 +125,7 @@ public class TasksController {
                 Tasks existing = existingTasks.get();
                 existing.setContent(tasks.getContent());
                 existing.setColumnId(tasks.getColumnId());
-                existing.setColor(tasks.getColor());
+                existing.setBackgroundColor(tasks.getbackgroundColor());
                 existing.setIsNew(tasks.getIsNew());
 
                 // Save to the repo

@@ -21,7 +21,7 @@ public class Tasks {
     private int columnId;
 
     @Column(name = "backgroundColor")
-    private String color;
+    private String backgroundColor;
 
     @Column(name = "isNew")
     private Boolean isNew;
@@ -34,16 +34,16 @@ public class Tasks {
         this.id = 0;
         this.columnId = 0;
         this.content = "";
-        this.color = "";
+        this.backgroundColor = "";
         this.isNew = false;
         this.user = new Users();
     }
 
-    public Tasks(int id, int columnId, String content, String color, Boolean isNew, Users user) {
+    public Tasks(String backgroundColor, int columnId, String content, int id, Boolean isNew, Users user) {
         this.id = id;
         this.columnId = columnId;
         this.content = content;
-        this.color = color;
+        this.backgroundColor = backgroundColor;
         this.isNew = isNew;
         this.user = user;
     }
@@ -51,7 +51,6 @@ public class Tasks {
     public int getId() {
         return id;
     }
-
 
     public Users getUser() {
         return user;
@@ -65,8 +64,8 @@ public class Tasks {
         return content;
     }
 
-    public String getColor() {
-        return color;
+    public String getbackgroundColor() {
+        return backgroundColor;
     }
 
     public Boolean getIsNew() {
@@ -90,8 +89,8 @@ public class Tasks {
         this.content = content;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setBackgroundColor(String backgroundColor) {
+        this.backgroundColor = backgroundColor;
     }
 
     public void setIsNew(Boolean isNew) {

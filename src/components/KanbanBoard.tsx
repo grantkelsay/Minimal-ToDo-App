@@ -60,7 +60,7 @@ function KanbanBoard() {
 
                 const tasksResponse = await axios.get(`http://localhost:9090/user/getTasksByName/${username}`);
                 console.log(tasksResponse.data);
-                setTasks(tasksResponse.data); // Update columns state with fetched data
+                setTasks(tasksResponse.data); // Update task state with fetched data
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -71,12 +71,12 @@ function KanbanBoard() {
 
     // Listen for changes to columns and save it to local storage
     useEffect(() => {
-        saveDataToLocalStorage("columns", columns);
+        //saveDataToLocalStorage("columns", columns);
     }, [columns]);
 
     // Listen for changes to tasks and save it to local storage
     useEffect(() => {
-        saveDataToLocalStorage("tasks", tasks);
+        //saveDataToLocalStorage("tasks", tasks);
     }, [tasks]);
 
     if ((menuVisible || columns.length === 0) && !isInitialized.current) {
@@ -284,7 +284,7 @@ function KanbanBoard() {
             content: "Edit Task",
             backgroundColor,
             isNew,
-            user: currentUser
+            user: currentUser,
         }
         //console.log(user);
 
@@ -314,7 +314,6 @@ function KanbanBoard() {
         const newTasks = tasks.map(task => {
             if (task.id !== id) return task;
             return {...task, content, backgroundColor};
-            
         });
 
         // Send the new column information to the API endpoint

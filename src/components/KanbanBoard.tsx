@@ -55,30 +55,25 @@ function KanbanBoard() {
         const fetchData = async () => {
             try {
                 const columnsResponse = await axios.get(`http://localhost:9090/user/getColumnsByName/${username}`);
-                console.log(columnsResponse.data);
-                setColumns(columnsResponse.data); // Update columns state with fetched data
+                // Make sure that the response is not empty
+                if (columnsResponse.data) {
+                    //console.log(columnsResponse.data);
+                    setColumns(columnsResponse.data); // Update columns state with fetched data
 
-                const tasksResponse = await axios.get(`http://localhost:9090/user/getTasksByName/${username}`);
-                console.log(tasksResponse.data);
-                setTasks(tasksResponse.data); // Update task state with fetched data
+                    const tasksResponse = await axios.get(`http://localhost:9090/user/getTasksByName/${username}`);
+                    //console.log(tasksResponse.data);
+                    setTasks(tasksResponse.data); // Update task state with fetched data
+                    hideMenu();
+                }
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         }
+        // Call the fetchData method
         fetchData();
-        hideMenu();
     }, []);
 
-    // Listen for changes to columns and save it to local storage
-    useEffect(() => {
-        //saveDataToLocalStorage("columns", columns);
-    }, [columns]);
-
-    // Listen for changes to tasks and save it to local storage
-    useEffect(() => {
-        //saveDataToLocalStorage("tasks", tasks);
-    }, [tasks]);
-
+    // If the user hasn't created any columns or tasks, initialize the board
     if ((menuVisible || columns.length === 0) && !isInitialized.current) {
         return (
             <div className="
@@ -471,10 +466,6 @@ function KanbanBoard() {
 
     function hideMenu() {
         setMenuVisible(false);
-    }
-
-    function saveDataToLocalStorage(key: string, data: any) {
-        localStorage.setItem(key, JSON.stringify(data));
     }
 }
 

@@ -14,14 +14,14 @@ public class Tasks {
     @Id
     private Integer id;
 
-    @Column(name = "content")
-    private String content;
+    @Column(name = "backgroundColor")
+    private String backgroundColor;
 
     @Column(name = "columndId")
     private int columnId;
 
-    @Column(name = "backgroundColor")
-    private String backgroundColor;
+    @Column(name = "content")
+    private String content;
 
     @Column(name = "isNew")
     private Boolean isNew;
@@ -41,9 +41,9 @@ public class Tasks {
 
     public Tasks(String backgroundColor, int columnId, String content, int id, Boolean isNew, Users user) {
         this.id = id;
+        this.backgroundColor = backgroundColor;
         this.columnId = columnId;
         this.content = content;
-        this.backgroundColor = backgroundColor;
         this.isNew = isNew;
         this.user = user;
     }

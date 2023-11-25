@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5174")
+@CrossOrigin
 public class TasksController {
     
     private final TasksRepository taskRepo;
@@ -67,6 +67,8 @@ public class TasksController {
                 if (foundTasks.isEmpty()) {
                     return new ResponseEntity<>(HttpStatus.NO_CONTENT);
                 }
+
+                System.out.println(foundTasks);
     
                 return new ResponseEntity<>(foundTasks, HttpStatus.OK);
             } else {

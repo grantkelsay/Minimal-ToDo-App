@@ -8,10 +8,10 @@ export type Column = {
 }
 
 export type Task = {
+    id: Id,
     backgroundColor: string;
     columnId: Id,
     content: string;
-    id: Id,
     isNew: boolean;
     user: User;
 }

@@ -185,7 +185,7 @@ function ColumnContainer(props: Props) {
             ">
                 <div className="bg-pageBackgroundColor rounded-lg p-6">
                         <p>Are you sure you want to delete this column?</p>
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-4 flex justify-center">
                         <button
                         className="mr-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
                         onClick={confirmDelete}

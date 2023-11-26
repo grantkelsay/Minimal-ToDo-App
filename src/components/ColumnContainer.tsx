@@ -20,6 +20,8 @@ function ColumnContainer(props: Props) {
     const { column, deleteColumn, updateColumn, createTask, tasks, deleteTask, updateTask} = props;
 
     const [editMode, setEditMode] = useState(column.isNew);
+    const [showConfirm, setShowConfirm] = useState(false);
+    const [selectedColumnId, setSelectedColumnId] = useState<Id | null>(null);
 
     const inputRef = useRef<HTMLInputElement | null>(null); // Define the ref type
 
@@ -46,6 +48,24 @@ function ColumnContainer(props: Props) {
         updateColumn(column.id, column.title, false)
         //console.log("column status: " + column.isNew);
         //console.log("edit status: " + editMode);
+    }
+
+    const confirmDelete = () => {
+        if (selectedColumnId !== null){
+            deleteColumn(selectedColumnId);
+            setShowConfirm(false);
+            setSelectedColumnId(null);
+        }
+    }
+
+    const cancelDelete = () => {
+        setShowConfirm(false);
+        setSelectedColumnId(null);
+    }
+
+    const handleDeleteColumn = (columnId: Id) => {
+        setSelectedColumnId(columnId);
+        setShowConfirm(true);
     }
 
     const handleColumnBlur = () => {
@@ -122,7 +142,7 @@ function ColumnContainer(props: Props) {
                 rounded-full
                 "
                 >{tasks.length}</div>
-                {!editMode && !column.isNew ? (
+                {!editMode && !column.isNew && !showConfirm ? (
                     column.title
                 ) : (
                     <input 
@@ -144,7 +164,7 @@ function ColumnContainer(props: Props) {
             </div>
             <button 
             onClick= {() => {
-                deleteColumn(column.id);
+               handleDeleteColumn(column.id);
             }}
             className="
             stroke-gray-500
@@ -158,7 +178,31 @@ function ColumnContainer(props: Props) {
                 <TrashIcon />
             </button>
         </div>
-        
+
+        {showConfirm && (
+            <div className="
+            fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-mainBackgroundColor bg-opacity-50
+            ">
+                <div className="bg-pageBackgroundColor rounded-lg p-6">
+                        <p>Are you sure you want to delete this column?</p>
+                    <div className="mt-4 flex justify-center">
+                        <button
+                        className="mr-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                        onClick={confirmDelete}
+                        >
+                        Delete
+                        </button>
+                        <button
+                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        onClick={cancelDelete}
+                        >
+                        Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+       
         {/* Column Task Container */}
         <div className="
         flex 
@@ -180,6 +224,8 @@ function ColumnContainer(props: Props) {
                 ))}
             </SortableContext>
         </div>
+
+        
 
         {/* Column Footer */}
         <button className="

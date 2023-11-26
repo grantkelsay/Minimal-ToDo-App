@@ -53,11 +53,7 @@ function LoginScreen() {
         };
 
         setUser(userToAdd);
-
-        console.log("Username: " + userName);
-        console.log("Password: " + password);
-        // console.log("Columns: " + columns);
-        // console.log("Tasks: " + tasks);
+        console.log(user);
 
         // Validate user information at API endpoint 'validateUser'
         fetch("http://localhost:9090/addUser", {
@@ -71,22 +67,18 @@ function LoginScreen() {
           console.log("Registration success");
 
         } else if (response.status === 401) {
-          // Unauthorized - display an error message
+          // Unauthorized
           console.log("Invalid password");
-          // You can show an error message to the user or handle it accordingly
         } else if (response.status === 404) {
-          // User not found - display an error message
+          // User not found
           console.log("User not found");
-          // You can show an error message to the user or handle it accordingly
         } else {
-          // Other error - display a generic error message
+          // Other error
           console.log("An error occurred");
-          // You can show a generic error message to the user or handle it accordingly
         }
       })
       .catch(error => {
         console.error("Error:", error);
-        // Handle network errors or fetch-related issues
       });
 
       setPasswordMismatchError(false);
@@ -99,20 +91,15 @@ function LoginScreen() {
   }
 
   const handleLoginClick = () => {
-
     const userToValidate:User = {
       userName: userName,
       userPass: password,
-      // columns: columns,
-      // tasks: tasks,
     };
 
     setUser(userToValidate);
 
     console.log("Username: " + userName);
     console.log("Password: " + password);
-    // console.log("Columns: " + columns);
-    // console.log("Tasks: " + tasks);
 
     // Validate user information at API endpoint 'validateUser'
     fetch("http://localhost:9090/validate-user", {
@@ -127,22 +114,18 @@ function LoginScreen() {
         state: { currentUser : userToValidate }
       });
     } else if (response.status === 401) {
-      // Unauthorized - display an error message
+      // Unauthorized
       console.log("Invalid password");
-      // You can show an error message to the user or handle it accordingly
     } else if (response.status === 404) {
-      // User not found - display an error message
+      // User not found
       console.log("User not found");
-      // You can show an error message to the user or handle it accordingly
     } else {
-      // Other error - display a generic error message
+      // Other error
       console.log("An error occurred");
-      // You can show a generic error message to the user or handle it accordingly
     }
   })
   .catch(error => {
     console.error("Error:", error);
-    // Handle network errors or fetch-related issues
   });
   }
 

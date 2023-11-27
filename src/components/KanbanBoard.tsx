@@ -54,13 +54,13 @@ function KanbanBoard() {
     useEffect (() => {
         const fetchData = async () => {
             try {
-                const columnsResponse = await axios.get(`https://54.215.242.154:9090/user/getColumnsByName/${username}`);
+                const columnsResponse = await axios.get(`http://54.215.242.154:80/user/getColumnsByName/${username}`);
                 // Make sure that the response is not empty
                 if (columnsResponse.data) {
                     //console.log(columnsResponse.data);
                     setColumns(columnsResponse.data); // Update columns state with fetched data
 
-                    const tasksResponse = await axios.get(`https://54.215.242.154:9090/user/getTasksByName/${username}`);
+                    const tasksResponse = await axios.get(`http://54.215.242.154:80/user/getTasksByName/${username}`);
                     //console.log(tasksResponse.data);
                     setTasks(tasksResponse.data); // Update task state with fetched data
                     hideMenu();
@@ -261,7 +261,7 @@ function KanbanBoard() {
         };
 
         // Send the new column information to the API endpoint
-        fetch("https://54.215.242.154:9090/addColumn", {
+        fetch("http://54.215.242.154:80/addColumn", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(columnToAdd)
@@ -284,7 +284,7 @@ function KanbanBoard() {
         //console.log(user);
 
         // Send the new column information to the API endpoint
-        fetch("https://54.215.242.154:9090/addTask", {
+        fetch("http://54.215.242.154:80/addTask", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(newTask)
@@ -297,7 +297,7 @@ function KanbanBoard() {
         const newTasks = tasks.filter((task) => task.id !== id);
 
         // Send the new column information to the API endpoint
-        fetch(`https://54.215.242.154:9090/deleteTaskById/${id}`, {
+        fetch(`http://54.215.242.154:80/deleteTaskById/${id}`, {
             method:"DELETE",
             headers:{"Content-Type":"application/json"}
         }).then(() => {console.log("Task deleted")})
@@ -312,7 +312,7 @@ function KanbanBoard() {
         });
 
         // Send the new column information to the API endpoint
-        fetch("https://54.215.242.154:9090/updateTasks", {
+        fetch("http://54.215.242.154:80/updateTasks", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(newTasks)
@@ -335,7 +335,7 @@ function KanbanBoard() {
         // Filters the 'columns' array to remove the column with the specified 'id'.
         const filteredColumns = columns.filter((col) => col.id !== id);
 
-        fetch(`https://54.215.242.154:9090/deleteColumnById/${id}`, {
+        fetch(`http://54.215.242.154:80/deleteColumnById/${id}`, {
             method:"DELETE",
             headers:{"Content-Type":"application/json"}
         }).then(() => {console.log("Column deleted")})
@@ -356,7 +356,7 @@ function KanbanBoard() {
         });
 
         // Update column information to the API endpoint 'updateColumns'
-        fetch("https://54.215.242.154:9090/updateColumns", {
+        fetch("http://54.215.242.154:80/updateColumns", {
             method:"POST",
             headers:{"Content-Type":"application/json"},
             body:JSON.stringify(newColumns)

@@ -56,7 +56,7 @@ function LoginScreen() {
         console.log(user);
 
         // Validate user information at API endpoint 'validateUser'
-        fetch("http://localhost:9090/addUser", {
+        fetch("http://54.176.145.60:80/addUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userToAdd)
@@ -102,7 +102,7 @@ function LoginScreen() {
     console.log("Password: " + password);
 
     // Validate user information at API endpoint 'validateUser'
-    fetch("http://localhost:9090/validate-user", {
+    fetch("http://54.176.145.60:80/validate-user", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(userToValidate)

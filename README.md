@@ -1,14 +1,12 @@
 # Minimal Todo Task Board
 
-![mnml](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/f97a00de-8f89-4149-8a94-3da66df25ef4)
-
 ## Overview
 
-Minimal Todo is a sleek and intuitive Task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
+Minimal Todo is a sleek and intuitive task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
 
 ## Try it Yourself
 
-[Mnml.todo](https://mnmltodo.netlify.app/)
+[Mnml.todo](https://mnmltodo.app/)
 
 ## Current Features
 
@@ -45,14 +43,19 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 5. **Stay Productive**: Focus on your tasks and boost your productivity!
 
 ## Screenshots
+![ss1](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/8fb2d880-da14-46b2-8d7e-9f6b0cb764aa)
 
-<img width="2249" alt="Screen Shot 2023-11-02 at 11 42 00 AM" src="https://github.com/grantkelsay/Mnml.Todo/assets/62901403/a4ba7de7-3fbe-4d36-a6de-7ead648f847a">
+![ss2](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/c68cabf0-2d72-4db8-a164-fae2239f1f4b)
+
+![ss3](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/48303df8-f4bf-4e5f-9db4-41f8e83ff4e3)
+
+![ss4](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/f74ad2d6-9ed7-40a1-be70-d68a961cf485)
 
 ## Tech Stack
 
 - Frontend: HTML, CSS, TailwindCSS, TypeScript, React, Vue.js
 - Backend: Java Spring Boot
-- Hosting: N/A
+- Hosting: Netlfiy & Render
 
 ## Feedback
 

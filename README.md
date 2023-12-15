@@ -20,6 +20,8 @@ Minimal Todo is a sleek and intuitive task board application designed to help yo
 
 - **Quick Editing**: Inline editing for task details, making updates a breeze.
 
+- **Color Customization**: Use colors to create your own color coding system.
+
 - **Dark Mode**: Reduce eye strain with our beautiful dark mode.
 
 ## Future Features
@@ -43,13 +45,14 @@ Minimal Todo is a sleek and intuitive task board application designed to help yo
 5. **Stay Productive**: Focus on your tasks and boost your productivity!
 
 ## Screenshots
-![ss1](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/8fb2d880-da14-46b2-8d7e-9f6b0cb764aa)
 
-![ss2](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/c68cabf0-2d72-4db8-a164-fae2239f1f4b)
+![ss2](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/efd768e2-41f9-4b98-8744-39e442ed60a5)
 
-![ss3](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/48303df8-f4bf-4e5f-9db4-41f8e83ff4e3)
+![ss1](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/41f9c18d-e6e5-4a43-838b-ead1cc8e95d4)
 
-![ss4](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/f74ad2d6-9ed7-40a1-be70-d68a961cf485)
+![ss3](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/1605bcba-35c1-4df7-8037-92246a063453)
+
+![ss4](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/84feb6a0-3ad6-48d4-898d-c4505e7b4829)  
 
 ## Tech Stack
 

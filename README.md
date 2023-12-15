@@ -58,7 +58,7 @@ Minimal Todo is a sleek and intuitive task board application designed to help yo
 
 - Frontend: HTML, CSS, TailwindCSS, TypeScript, React, Vue.js
 - Backend: Java Spring Boot
-- Hosting: Netlfiy & Render
+- Hosting: Netlify & Render
 
 ## Feedback
 

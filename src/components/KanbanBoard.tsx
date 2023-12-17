@@ -15,6 +15,7 @@ function KanbanBoard() {
     const location = useLocation();
     const { currentUser } = location.state;
     const username = currentUser.userName;
+    console.log(username);
 
     // console.log("Active user: " + user.userName);
     // console.log("Active user password: " + user.userPass);

@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { User } from '../types';
 import BackIcon from '../icons/BackIcon';
@@ -9,30 +9,36 @@ function LoginScreen() {
   const [newReg, setNewReg] = useState(false);
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
+  const [regSuccess, setRegSuccess] = useState(false);
+  const [regBadUser, setRegBadUser] = useState(false);
   const [userName, setUserName] = useState('');
   const [passwordMismatchError, setPasswordMismatchError] = useState(false);
-  // const [columns, setColumns] = useState<Column[]>([]);
-  // const [tasks, setTasks] = useState<Task[]>([]);
-  const [user, setUser] = useState<User>();
-  //const [showTaskBoard, setShowTaskBoard] = useState(false);
 
   const navigate = useNavigate();
 
-  // const handleLoginBlur = () => {
-  //   setEditMode((prev) => !prev);
-  // }
-
   const handlePassword = (event: ChangeEvent<HTMLInputElement>) => {
-    setPassword(event.target.value)
+    setPassword(event.target.value);
   }
 
   const handlePasswordCheck = (event: ChangeEvent<HTMLInputElement>) => {
-    setPasswordCheck(event.target.value)
+    setPasswordCheck(event.target.value);
   }
 
   const handleUserName = (event: ChangeEvent<HTMLInputElement>) => {
-    setUserName(event.target.value)
+    setUserName(event.target.value);
   }
+
+  useEffect(() => {
+    console.log(userName);
+  }, [userName]);
+
+  useEffect(() => {
+    console.log(password);
+  }, [password]);
+
+  useEffect(() => {
+    console.log(passwordCheck);
+  }, [passwordCheck]);
 
   const handleRegistrationPage = () => {
     setNewReg((prev) => !prev);
@@ -48,30 +54,22 @@ function LoginScreen() {
         const userToAdd:User = {
           userName: userName,
           userPass: password,
-          // columns: columns,
-          // tasks: tasks,
         };
 
-        setUser(userToAdd);
-        console.log(user);
+        console.log(userToAdd);
 
         // Validate user information at API endpoint 'validateUser'
         fetch("https://mnmltodobackend.onrender.com/addUser", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(userToAdd)
+
       })
       .then(response => {
         if (response.ok) {
           // User created successfully
           console.log("Registration success");
-
-        } else if (response.status === 401) {
-          // Unauthorized
-          console.log("Invalid password");
-        } else if (response.status === 404) {
-          // User not found
-          console.log("User not found");
+          setRegSuccess(true);
         } else {
           // Other error
           console.log("An error occurred");
@@ -90,13 +88,23 @@ function LoginScreen() {
 
   }
 
+  const handleCancel = () => {
+    if (regBadUser == true) {
+      setRegBadUser((prev) => !prev);
+    }
+    if (passwordMismatchError == true) {
+      setPasswordMismatchError((prev) => !prev);
+    }
+    if (regSuccess == true) {
+      setRegSuccess((prev) => !prev);
+    }
+  }
+
   const handleLoginClick = () => {
     const userToValidate:User = {
       userName: userName,
       userPass: password,
     };
-
-    setUser(userToValidate);
 
     console.log("Username: " + userName);
     console.log("Password: " + password);
@@ -113,12 +121,10 @@ function LoginScreen() {
       navigate('/task-board', {
         state: { currentUser : userToValidate }
       });
-    } else if (response.status === 401) {
-      // Unauthorized
-      console.log("Invalid password");
     } else if (response.status === 404) {
       // User not found
       console.log("User not found");
+      setRegBadUser(true);
     } else {
       // Other error
       console.log("An error occurred");
@@ -205,7 +211,7 @@ function LoginScreen() {
               placeholder-opacity-50
               mt-8
             "
-            placeholder="Your name" 
+            placeholder="User ID" 
             value={userName}
             onChange={handleUserName}
             onClick={() => { 
@@ -230,7 +236,7 @@ function LoginScreen() {
               placeholder-opacity-50
               mb-4
             "
-            placeholder="Set password" 
+            placeholder="Password" 
             value={password}
             onChange={handlePassword}
             onClick={() => { 
@@ -260,9 +266,24 @@ function LoginScreen() {
             }}/>
           </div>
         </div>
+        
         {newReg && passwordMismatchError && (
-            <div className="text-red-500 mt-2">Passwords do not match.</div>
-          )}
+            <div className="
+            fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-mainBackgroundColor bg-opacity-50
+            ">
+                <div className="bg-pageBackgroundColor rounded-lg p-6">
+                        <p>Passwords do not match.</p>
+                    <div className="mt-4 flex justify-center">
+                        <button
+                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        onClick={handleCancel}
+                        >
+                        OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
         <div className='
         flex
         flex-col
@@ -353,7 +374,7 @@ function LoginScreen() {
               placeholder-opacity-50
               mt-8
             "
-            placeholder="Username" 
+            placeholder="User ID"
             value={userName}
             onChange={handleUserName}
             onClick={() => { 
@@ -386,7 +407,7 @@ function LoginScreen() {
             <button className="
               rounded-xl
               text-left
-              py-2
+              py-3
               px-2
               text-mainAccentColor
               opacity-50
@@ -394,7 +415,7 @@ function LoginScreen() {
               text-[12px]
             "
             onClick={handleRegistrationPage}
-            >New? Register here</button>
+            >Register here</button>
           </div>
         </div>
         <div className='
@@ -417,6 +438,43 @@ function LoginScreen() {
           onClick={handleLoginClick}
           >Login</button>
         </div>
+
+        {regBadUser && (
+            <div className="
+            fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-mainBackgroundColor bg-opacity-50
+            ">
+                <div className="bg-pageBackgroundColor rounded-lg p-6">
+                        <p>Username or password was incorrect.</p>
+                    <div className="mt-4 flex justify-center">
+                        <button
+                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        onClick={handleCancel}
+                        >
+                        OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
+        {regSuccess && (
+            <div className="
+            fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-mainBackgroundColor bg-opacity-50
+            ">
+                <div className="bg-pageBackgroundColor rounded-lg p-6">
+                        <p>Registration Successful.</p>
+                    <div className="mt-4 flex justify-center">
+                        <button
+                        className="px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400"
+                        onClick={handleCancel}
+                        >
+                        OK
+                        </button>
+                    </div>
+                </div>
+            </div>
+        )}
+
       </div>
     </div>
   );

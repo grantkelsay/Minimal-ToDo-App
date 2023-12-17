@@ -1,14 +1,12 @@
 # Minimal Todo Task Board
 
-![mnml](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/f97a00de-8f89-4149-8a94-3da66df25ef4)
-
 ## Overview
 
-Minimal Todo is a sleek and intuitive Task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
+Minimal Todo is a sleek and intuitive task board application designed to help you streamline your task management, prioritize your work, and boost your productivity. With a minimalist and user-friendly interface, it offers a simple yet powerful way to organize your tasks, track progress, and get things done efficiently.
 
 ## Try it Yourself
 
-[Mnml.todo](https://mnmltodo.netlify.app/)
+[Mnml.todo](https://mnmltodo.app/)
 
 ## Current Features
 
@@ -21,6 +19,8 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 - **Drag-and-Drop**: Easily move tasks between columns with a simple drag-and-drop interface.
 
 - **Quick Editing**: Inline editing for task details, making updates a breeze.
+
+- **Color Customization**: Use colors to create your own color coding system.
 
 - **Dark Mode**: Reduce eye strain with our beautiful dark mode.
 
@@ -46,13 +46,19 @@ Minimal Todo is a sleek and intuitive Task board application designed to help yo
 
 ## Screenshots
 
-<img width="2249" alt="Screen Shot 2023-11-02 at 11 42 00 AM" src="https://github.com/grantkelsay/Mnml.Todo/assets/62901403/a4ba7de7-3fbe-4d36-a6de-7ead648f847a">
+![ss2](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/efd768e2-41f9-4b98-8744-39e442ed60a5)
+
+![ss1](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/41f9c18d-e6e5-4a43-838b-ead1cc8e95d4)
+
+![ss3](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/1605bcba-35c1-4df7-8037-92246a063453)
+
+![ss4](https://github.com/grantkelsay/Mnml.Todo/assets/62901403/84feb6a0-3ad6-48d4-898d-c4505e7b4829)  
 
 ## Tech Stack
 
 - Frontend: HTML, CSS, TailwindCSS, TypeScript, React, Vue.js
 - Backend: Java Spring Boot
-- Hosting: N/A
+- Hosting: Netlify & Render
 
 ## Feedback
 
